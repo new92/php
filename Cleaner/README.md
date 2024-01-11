@@ -7,4 +7,4 @@ A simple php script which deletes the temporary files and frees up space.
 ```bash
 php -S localhost:8080
 ```
-#### Visit: http://localhost:8080/cleaner.php to see the results
+### Visit: http://localhost:8080/cleaner.php to see the results
