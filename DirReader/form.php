@@ -6,7 +6,7 @@
     <title>DirReader</title>
 </head>
 <body>
-    <form method='post' action='method2.php'>
+    <form method='post' action='reader.php'>
         Starting dir:
         <input type='text' name='dir' />
         <br /><br />
