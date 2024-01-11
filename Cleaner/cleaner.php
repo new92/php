@@ -1,5 +1,7 @@
 <?php
-
+/*
+Author: new92
+*/
 function total($path) {
     $size = 0;
     $items = scandir($path);
