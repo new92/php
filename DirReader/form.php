@@ -6,7 +6,7 @@
     <title>DirReader</title>
 </head>
 <body>
-    <form method='post' action='method_.php'> <!-- Add method number to method.php . Example: method_1.php -->
+    <form method='post' action='method1.php'>
         Starting dir:
         <input type='text' name='dir' />
         <br /><br />
