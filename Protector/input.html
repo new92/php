@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Protector • Input</title>
+    <link rel="icon" type="image/x-icon" href="static/icon.png" />
+    <link rel="stylesheet" type="text/css" href="static/style.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Single+Day&display=swap" rel="stylesheet">
+</head>
+<body>
+    <center>
+        <p class="text">Protector</p>
+        <div class="url-input-container">
+            <form action="protector.php" method="post">
+                <input type="url" class="url-input" name="url" placeholder="Enter URL for scanning" required style="font-size: 16px; font-family: 'Anton', sans-serif;" autocomplete="url" />
+                <br><br>
+                <input type="text" class="url-input" name="host" placeholder="Enter host" maxlength="13" required style="font-size: 16px; font-family: 'Anton', sans-serif;"/>
+                <br><br>
+                <button type="submit" name="submit" class="submit-btn">Scan</button>
+            </form>
+        </div>
+    </center>
+</body>
+</html>
