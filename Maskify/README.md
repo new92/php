@@ -10,6 +10,8 @@ Maskify is a versatile PHP script designed to provide URL masking functionality.
 php localhost.php
 ```
 
+## Interface 🚀
+
 ![menu](https://github.com/new92/php/assets/94779840/8120ec09-3aaa-41c8-92f4-136aefa8fae0)
 
 ![masked url](https://github.com/new92/php/assets/94779840/a9a57259-4424-41cf-9c3f-ff6cf39639cd)
