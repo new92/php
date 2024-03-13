@@ -2,7 +2,6 @@
 
 $host = 'localhost';
 $port = 8080;
-$red = "\033[0;31m";
 $green = "\033[0;32m";
 $reset = "\033[0m";
 
