@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maskify • Main</title>
+    <link rel="stylesheet" type="text/css" href="static/main.css" />
+    <link rel="icon" type="image/x-icon" href="static/icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&family=Protest+Strike&display=swap" rel="stylesheet">
+</head>
+<body>
+    <center><img src="static/weblogo.png" class="logo" />
+    <form action="output.php" method="post">
+        <input type="text" name="keywords" class="input" placeholder="The keywords for the masking (use - to separate each keyword)" required/>
+        <br /><br />
+        <input type="url" name="domain" class="input" placeholder="The domain to use for masking" required/>
+        <br /><br />
+        <input type="url" name="url" class="input" placeholder="The URL to mask" required/>
+        <br /><br />
+        <input type="submit" class="submit" name="submit" value="Mask" />
+    </form></center>
+</body>
+</html>
