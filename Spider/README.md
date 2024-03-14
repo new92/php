@@ -1,4 +1,4 @@
-<p align="center"><img src="https://github.com/new92/php/assets/94779840/f6b1fb97-1862-4628-b683-8751287937a3" style="height: 500px; width: 900px;"/></p>
+<p align="center"><img src="https://github.com/new92/php/assets/94779840/f6b1fb97-1862-4628-b683-8751287937a3" style="height: 400px; width: 900px;"/></p>
 
 Spider is a PHP script designed to crawl through a given website and extract all the URLs present within its pages. This script provides a simple yet effective way to gather URLs for various purposes such as indexing, data analysis, or link validation.
 
