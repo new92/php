@@ -14,6 +14,4 @@ php localhost.php
 
 ![menu](https://github.com/new92/php/assets/94779840/8120ec09-3aaa-41c8-92f4-136aefa8fae0)
 
-![sample](https://github.com/new92/php/assets/94779840/285b6e80-da95-41b0-9bf6-2fd7592e2f19)
-
 ![masked url](https://github.com/new92/php/assets/94779840/a9a57259-4424-41cf-9c3f-ff6cf39639cd)
