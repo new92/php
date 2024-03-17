@@ -23,6 +23,7 @@
         $socials = [];
         $mails = [];
         $externals = [];
+        $internals = [];
         $host = parse_url($host, PHP_URL_HOST);
         $host = explode('.', $host)[0];
         for ($i = 0; $i < count($urls); $i++) {
@@ -41,9 +42,11 @@
                 }
             } elseif (!str_contains($urls[$i], $host) && !(in_array($urls[$i], $externals))) {
                 array_push($externals, $urls[$i]);
+            } elseif (str_contains($urls[$i], $host) && !(in_array($urls[$i], $internals))) {
+                array_push($internals, $urls[$i]);
             }
         }
-        return array($socials, $mails, $externals);
+        return array($socials, $mails, $externals, $internals);
     }
 
     $browser = new HttpBrowser(HttpClient::create());
@@ -81,25 +84,28 @@
     $socs = $cats[0];
     $mails = $cats[1];
     $externals = $cats[2];
+    $internals = $cats[3];
     for ($i = 0; $i < count($urls); $i++) {
         array_push($socs, NULL);
         array_push($mails, NULL);
         array_push($externals, NULL);
+        array_push($internals, NULL);
     }
     ?>
     <center>
         <div class="widget">
-            <h2>Extracted URLS</h2>
+            <h2>Extracted URLs</h2>
             <table>
                 <tr>
-                    <th>Exctracted URLS</th>
+                    <th>Exctracted URLs</th>
                     <th>Socials</th>
                     <th>Mails</th>
-                    <th>External URLS</th>
+                    <th>External URLs</th>
+                    <th>Internal URLs</th>
                 </tr>
                 <?php
                     for ($i = 0; $i < count($urls); $i++) {
-                        echo '<tr><td><a href="' . $urls[$i] . '" target="_blank">' . $urls[$i] . '</a></td><td><a href="' . $socs[$i] . '" target="_blank">' . $socs[$i] . '</a></td><td><a href="' . $mails[$i] . '" target="_blank">' . $mails[$i] . '</a></td><td><a href="' . $externals[$i] . '" target="_blank">' . $externals[$i] . '</a></td></tr>';
+                        echo '<tr><td><a href="' . $urls[$i] . '" target="_blank">' . $urls[$i] . '</a></td><td><a href="' . $socs[$i] . '" target="_blank">' . $socs[$i] . '</a></td><td><a href="' . $mails[$i] . '" target="_blank">' . $mails[$i] . '</a></td><td><a href="' . $externals[$i] . '" target="_blank">' . $externals[$i] . '</a></td><td><a href="' . $internals[$i] . '" target="_blank">' . $internals[$i] . '</a></td></tr>';
                     }
                 ?>
             </table>
