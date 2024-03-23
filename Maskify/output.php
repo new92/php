@@ -58,7 +58,7 @@ if ($result) {
 <div class="url-container">
     <a href="<?php echo $result; ?>"><?php echo $result; ?></a>
     <br /><br />
-    <div class="popup" id="popup">Link copied to clipboard</div>
+    <div class="popup" id="popup">Link copied to clipboard !</div>
 </div></center>
 <?php
 } else {
