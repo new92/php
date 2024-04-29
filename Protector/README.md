@@ -8,6 +8,8 @@ A php script which analyzes URLs and returns a status and some extra info about 
 php localhost.php
 ```
 
+## UI ✨
+
 ![input](https://github.com/new92/php/assets/94779840/e32b5014-3004-4646-b1de-50b384e3cea9)
 
 ![review](https://github.com/new92/php/assets/94779840/9a2bcce5-723f-4e60-bd05-6ea8bfa4a358)

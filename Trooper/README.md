@@ -9,6 +9,7 @@ A php script to extract info from a user on Instagram.
 php localhost.php
 ```
 
+## UI ✨
 
 ![form](https://github.com/new92/php/assets/94779840/2866d233-251b-47c6-ba7f-7a2a15bbe730)
 
