@@ -58,6 +58,9 @@
                     } elseif ($weather[1][$i] == 'Partially cloudy') {
                         echo '<img src="static/partly-cloudy.png" alt="Partially cloudy" />';
                         echo '<p>Partially cloudy</p>';
+                    } elseif ($weather[1][$i] == 'Rain, Overcast') {
+                        echo '<img src="static/rainy.png" alt="Rainy" />';
+                        echo '<p>Rainy</p>';
                     }
                     echo '</div>';
                 }
