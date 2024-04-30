@@ -15,4 +15,6 @@ php localhost.php
 
 ## API key 🗝️
 
+Before using the WeatherApp make sure to have your own API key and place it in the 32nd line in the `index.php` script.
+
 Obtain your own API key from: https://rapidapi.com/visual-crossing-corporation-visual-crossing-corporation-default/api/visual-crossing-weather/
