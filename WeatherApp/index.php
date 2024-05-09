@@ -29,7 +29,7 @@
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
                 "X-RapidAPI-Host: visual-crossing-weather.p.rapidapi.com",
-                "X-RapidAPI-Key: <YOUR_API_KEY>"
+                "X-RapidAPI-Key: 1c06734724msh059c7f41dd75908p1c41b8jsnb6a2143bf24e"
             ],
         ]);
         $dates_pattern = "/\b\d{2}\/\d{2}\/\d{4}\b/";
