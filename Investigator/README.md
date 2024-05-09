@@ -10,3 +10,6 @@ php localhost.php
 
 ## UI ✨
 
+![index](https://github.com/new92/php/assets/94779840/6723f07a-6180-4d0b-b336-9da49844835a)
+
+![output](https://github.com/new92/php/assets/94779840/07d17f12-8711-435a-8057-df32e93f31ce)
