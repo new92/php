@@ -6,6 +6,7 @@ Gitspy is a PHP script designed to effortlessly retrieve and present comprehensi
 ## Run locally 🖥️
 
 ```bash
+cd Gitspy
 php localhost.php
 ```
 
