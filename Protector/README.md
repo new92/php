@@ -5,6 +5,7 @@ A php script which analyzes URLs and returns a status and some extra info about 
 ## Run locally 💻
 
 ```bash
+cd Protector
 php localhost.php
 ```
 
