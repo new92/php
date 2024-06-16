@@ -5,6 +5,7 @@ A basic weather app completely with HTML, CSS & PHP.
 ## Run locally 💻
 
 ```bash
+cd WeatherApp
 php localhost.php
 ```
 
