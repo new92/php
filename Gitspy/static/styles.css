@@ -1,0 +1,169 @@
+/* Reset styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.left-panel, .right-panel {
+    padding: 20px;
+    width: 250px;
+    background-color: #f8f9fa;
+}
+
+.left-panel h2, .right-panel h2 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.left-panel .followers-table, .right-panel .followings-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.left-panel .followers-table td, .right-panel .followings-table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.left-panel .followers-table td a, .right-panel .followings-table td a {
+    text-decoration: none;
+    color: #333;
+}
+
+.left-panel .followers-table td a:hover, .right-panel .followings-table td a:hover {
+    color: #007bff;
+}
+
+.profile-main {
+    flex: 1;
+    padding: 20px;
+}
+
+.profile-container {
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.user-stats {
+    flex: 1;
+}
+
+.user-name {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.user-username {
+    font-size: 18px;
+    color: #666;
+}
+
+.user-bio {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.stat {
+    font-size: 14px;
+}
+
+.repos-container {
+    margin-top: 20px;
+}
+
+.repo-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.repo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.repo-name {
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+}
+
+.repo-name:hover {
+    color: #007bff;
+}
+
+.repo-stats {
+    display: flex;
+}
+
+.repo-stats span {
+    margin-right: 10px;
+}
+
+.repo-description {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.repo-meta {
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: #666;
+}
+
+.repo-meta span {
+    margin-right: 10px;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+}
