@@ -5,6 +5,7 @@ Investigator is a powerful PHP script designed to gather comprehensive informati
 ## Run locally 🖥️
 
 ```bash
+cd Investigator
 php localhost.php
 ```
 
