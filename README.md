@@ -1,5 +1,5 @@
 # php
-All the programs I've built using php
+Programs I've built using PHP.
 
 ## Installation 📥
 
@@ -10,4 +10,4 @@ cd php
 
 ## Run locally 📲
 
-Each directory contains instructions on how to run each program locally.
+Each directory contains instructions on how to run each script locally.
