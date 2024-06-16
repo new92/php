@@ -5,6 +5,7 @@ Spider is a PHP script designed to crawl through a given website and extract all
 ## Run locally 🖥️
 
 ```bash
+cd Spider
 php localhost.php
 ```
 
