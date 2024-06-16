@@ -5,6 +5,7 @@ A simple image file uploading script with php.
 ## Run locally 🖥️
 
 ```bash
+cd "File uploader"
 php localhost.php
 ```
 
