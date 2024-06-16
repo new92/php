@@ -7,6 +7,7 @@ Maskify is a versatile PHP script designed to provide URL masking functionality.
 ## Run locally 🖥️
 
 ```bash
+cd Maskify
 php localhost.php
 ```
 
