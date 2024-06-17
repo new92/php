@@ -9,6 +9,11 @@
 </head>
 <body>
     <?php
+    /*
+
+    Gitspy 🕵️ by @new92
+
+    */
     function fetch($username) {
         $url = "https://api.github.com/users/$username";
         $options = [
