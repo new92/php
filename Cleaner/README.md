@@ -1,6 +1,6 @@
 # Cleaner 🧹
 
-A simple php script which deletes the temporary files and frees up space.
+A simple php script which deletes the temporary files and frees up space from your device.
 
 ## Run locally 📲
 
