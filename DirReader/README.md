@@ -1,5 +1,5 @@
 # DirReader 📖
-A php script in which the user enters the directory to scan and the script returns a number and the names of the files and subdirectories contained in the specified directory.
+A PHP script that allows users to specify a directory to scan. The script analyzes the directory and returns the total count as well as the names of all files and subdirectories it contains
 
 ## Run locally 📲
 ```bash
