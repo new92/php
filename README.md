@@ -1,5 +1,5 @@
 # php
-Programs I've built using PHP.
+Personal PHP projects
 
 ## Installation 📥
 
