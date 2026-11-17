@@ -1,4 +1,5 @@
-# PHP Utilities & Experiments
+<img width="1200" height="670" alt="logo" src="https://github.com/user-attachments/assets/1f6f2cb2-2933-4fb2-bf7c-ee68c6925997" />
+
 
 A collection of **10 independent PHP projects** by [new92](https://github.com/new92), built to explore server-side development, HTML/CSS interfaces, filesystem operations, public APIs, and web security concepts.
 
