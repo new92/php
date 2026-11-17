@@ -1,16 +1,31 @@
 # File uploader 📁
 
-A simple image file uploading script with php.
+A small image-upload demonstration, intended for **local development only**. It accepts JPEG, PNG and GIF files up to **500 KB**, checks their actual content, generates unpredictable storage filenames, and keeps files **outside the web-accessible directory** by default.
 
-## Run locally 🖥️
+## Run locally
+
+Requires **PHP 8.1+** with the `fileinfo` extension (enabled by default on standard PHP installations).
 
 ```bash
-cd "File uploader"
-php localhost.php
+git clone https://github.com/new92/php.git
+cd php/"File uploader"
+php -S 127.0.0.1:8080
 ```
 
-## UI ✨
+Open <http://127.0.0.1:8080/index.html>, choose an image, then upload it. A successful upload returns HTTP **201**.
 
-![index](https://github.com/new92/php/assets/94779840/08db9411-1541-4cd2-94e7-c6a1a0c26b1d)
+Images are stored under your operating system's temporary directory, in the `new92-php-image-uploads` folder. To choose another **private, non-web-accessible** directory, set `PHP_DEMO_UPLOAD_DIR` before starting the server. Example (macOS/Linux):
 
-![output](https://github.com/new92/php/assets/94779840/63ef138e-3ba2-4f17-a4a0-49def65094e0)
+```bash
+PHP_DEMO_UPLOAD_DIR=/path/to/private/uploads php -S 127.0.0.1:8080
+```
+
+On Windows PowerShell, use `$env:PHP_DEMO_UPLOAD_DIR='C:\private\uploads'` followed by `php -S 127.0.0.1:8080`.
+
+**Security:** Do not expose this demo directly to the public internet. It does not provide authentication, rate limiting, malware scanning, or upload quotas. In production, you must add these controls and configure PHP/web-server body-size limits, storage access controls, and lifecycle cleanup.
+
+## Screenshots
+
+![Upload form](photos/index.png)
+
+![Upload result](photos/output.png)

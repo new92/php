@@ -1,17 +1,34 @@
+# Gitspy · public GitHub profile explorer
 
-![logo](https://github.com/new92/php/assets/94779840/3062345b-c9d2-44d7-a26f-de7c49a8896f)
+Explore public GitHub account details, repositories, followers and following through the official HTTPS GitHub REST API.
 
-Gitspy is a PHP script designed to effortlessly retrieve and present comprehensive GitHub user information. With sleek functionality, it seamlessly connects to GitHub's API, fetching details such as repositories, followers, and followings. Gitspy consolidates data into a user-friendly display, offering insights at a glance into a user's GitHub profile.
+## Run locally
 
-## Run locally 🖥️
+Requires PHP **8.1+ with cURL**. From the repository root:
 
 ```bash
 cd Gitspy
-php localhost.php
+php -S 127.0.0.1:8080
 ```
 
-## UI ✨
+Open <http://127.0.0.1:8080/index.html>. Enter a GitHub username such as `octocat`.
 
-![menu](https://github.com/new92/php/assets/94779840/a60deabc-5d10-46c2-b078-05ce665ac083)
+**Optional API token** for larger rate limits (do not commit tokens):
 
-![sample](https://github.com/new92/php/assets/94779840/4db65d41-a19e-4b6d-874f-6a5be03f06e7)
+```bash
+# Set in your terminal BEFORE starting the PHP server
+export GITHUB_TOKEN=your_personal_token
+```
+
+PowerShell: `$env:GITHUB_TOKEN='your_personal_token'`. The token is sent only to `api.github.com` over verified HTTPS. Gitspy works without a token subject to GitHub's unauthenticated rate limits.
+
+## Improvements
+
+- Validates usernames before creating URLs, and only requests fixed GitHub API paths.
+- Escapes remote names, bios, repository descriptions and other displayed data.
+- Builds outbound links from validated account and repository names rather than trusting remote HTML.
+- Uses HTTPS certificate verification, timeouts and a response-size bound.
+- Handles API errors and rate limiting gracefully.
+- Displays total follower/repository counts from the account profile, clearly distinguishing the 30-item page previews.
+
+Public GitHub API fields and quotas may change. This is a small educational demo, not an exhaustive analytics tool.

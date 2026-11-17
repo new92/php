@@ -1,21 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index • Investigator</title>
-    <link rel="stylesheet" type="text/css" href="./static/style.css" />
-    <link rel="icon" type="image/x-icon" href="./static/icon.png" />
-</head>
-<body>
-    <div class="container">
-        <div class="logo">
-            <img src="./static/weblogo.png" alt="Logo">
-        </div>
-        <form id="form" method="post" action="output.php">
-            <input type="text" id="ip" name="ip" placeholder="Enter IP Address" required>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investigator · IP metadata explorer</title><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
+<header class="nav"><span class="brand">◎ Investigator</span><span class="label">Network research lab</span></header><div class="eyebrow">IP metadata</div><h1>Map the network.<br><span class="muted">Respect the context.</span></h1><p class="lead">Look up public network and approximate geolocation data for an IPv4 or IPv6 address.</p>
+<form method="post" action="output.php" class="form-card"><label for="ip">IP address</label><input id="ip" name="ip" type="text" placeholder="8.8.8.8" maxlength="45" autocomplete="off" required><p class="hint">The entered IP address is shared with a third-party lookup provider over HTTPS. Do not submit sensitive or private information.</p><button type="submit">Look up IP ↗</button></form>
+<section class="notice"><h2>Interpret responsibly</h2><p>Geolocation may identify an ISP or approximate region, not a person or a precise physical location. Never use an IP lookup alone to attribute activity.</p></section><footer>Independent educational utility · approximate data only</footer></main></body></html>

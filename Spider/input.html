@@ -1,23 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spider • Input</title>
-    <link rel="stylesheet" type="text/css" href="static/style.css" />
-    <link rel="icon" type="image/x-icon" href="static/icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Honk&family=Protest+Strike&display=swap" rel="stylesheet">
-</head>
-<body>
-    <center>
-        <img src="static/weblogo.png" class="logo" />
-        <form action="dashboard.php" method="post">
-            <input type="url" name="url" class="input" placeholder="The target URL" autocomplete="url" required />
-            <br /><br />
-            <input type="submit" class="submit" name="submit" value="Submit" />
-        </form>
-    </center>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spider · Link analyzer</title><meta name="description" content="A constrained single-page HTTPS link analyzer."><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
+<header class="nav"><span class="brand">◉ Spider</span><span class="label">Local research lab</span></header><div class="eyebrow">Web link analysis</div><h1>Discover the structure.<br><span class="muted">Not the noise.</span></h1>
+<p class="lead">Extract and organize links from a single HTML page. A simple, constrained tool for understanding site navigation and outbound references.</p>
+<form action="dashboard.php" method="post" class="form-card"><label for="url">HTTPS page</label><input id="url" type="url" name="url" placeholder="https://example.com/" pattern="https://.*" maxlength="2048" required><p class="hint">Only public HTTPS hosts explicitly approved via PHP_DEMO_ALLOWED_HOSTS are permitted. Spider does not follow links or redirects.</p><button type="submit">Analyze links ↗</button></form>
+<section class="notice"><h2>Single-page analysis</h2><p>Results are capped at 200 unique links and the fetched HTML at 512 KiB. This is a local educational tool, not an unrestricted web crawler.</p></section><footer>Respect website permissions and terms of use · local only</footer>
+</main></body></html>

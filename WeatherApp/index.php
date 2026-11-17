@@ -1,75 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherApp</title>
-    <link rel="icon" type="image/x-icon" href="static/icon.ico" />
-    <link rel="stylesheet" type="text/css" href="static/style.css" />
-</head>
-<body>
-    <form method="post" class="container">
-        <input type="text" name="city" minlength="1" maxlength="85" placeholder="City" required />
-        <input type="submit" name="search" class="search" value="Search" />
-    </form>
-    <?php
-    if (isset($_POST['search'])) {
-        $url = 'https://visual-crossing-weather.p.rapidapi.com/forecast?aggregateHours=24&location=' . trim($_POST['city']) .'&contentType=csv&unitGroup=us&shortColumnNames=0';
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => $url,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_USERAGENT => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36',
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => [
-                "X-RapidAPI-Host: visual-crossing-weather.p.rapidapi.com",
-                "X-RapidAPI-Key: <API_KEY>"
-            ],
-        ]);
-        $dates_pattern = "/\b\d{2}\/\d{2}\/\d{4}\b/";
-        $pattern = '/\"([^"]+)"$/m';
-        $response = curl_exec($curl);
-        $error = curl_error($curl);
+<?php
 
-        curl_close($curl);
-        if ($error) {
-            echo '<h1 style="color: red; text-align: center;">Error: Unable to fetch weather forecast</h1>';
-        } else {
-            if (preg_match_all($dates_pattern, $response, $dates) && preg_match_all($pattern, $response, $weather)) {
-                echo '<div class="weather-container">';
-                for ($i = 0; $i < count($dates[0]); $i++) {
-                    echo '<div class="weather-box">';
-                    echo '<div class="date">' . $dates[0][$i] . '</div>';
-                    if ($weather[1][$i] == 'Clear') {
-                        echo '<img src="static/sunny.png" alt="Sunny" />';
-                        echo '<p>Sunny</p>';
-                    } elseif ($weather[1][$i] == 'Rain, Partially cloudy') {
-                        echo '<img src="static/rainy.png" alt="Rainy" />';
-                        echo '<p>Rainy</p>';
-                    } elseif ($weather[1][$i] == 'Overcast') {
-                        echo '<img src="static/overcast.png" alt="Overcast" />';
-                        echo '<p>Overcast</p>';
-                    } elseif ($weather[1][$i] == 'Partially cloudy') {
-                        echo '<img src="static/partly-cloudy.png" alt="Partially cloudy" />';
-                        echo '<p>Partially cloudy</p>';
-                    } elseif ($weather[1][$i] == 'Rain, Overcast') {
-                        echo '<img src="static/rainy.png" alt="Rainy" />';
-                        echo '<p>Rainy</p>';
-                    }
-                    echo '</div>';
-                }
-                echo '</div>';
-            } else {
-                echo '<h1 style="color: red; text-align: center;">Error: Unable to fetch weather forecast</h1>';
-            }
+declare(strict_types=1);
+require_once __DIR__ . '/../shared/safe_http.php';
+require_once __DIR__ . '/forecast.php';
+header('Content-Type: text/html; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
+header("Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'none'");
+$city = '';
+$days = [];
+$error = null;
+if (($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST') {
+    try {
+        if (!is_string($_POST['city'] ?? null)) {
+            throw new InvalidArgumentException('Enter a city name.');
         }
+        $city = WeatherForecast::validateCity($_POST['city']);
+        $days = WeatherForecast::fetch($city);
+    } catch (Throwable $exception) {
+        $error = $exception->getMessage();
+        http_response_code(422);
     }
-    ?>
-</body>
-</html>
+}
+?>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Minimal weather forecast built with PHP."><title>WeatherApp · Forecast viewer</title><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
+<header class="nav"><span class="brand">☼ WeatherApp</span><span class="label">Local forecast demo</span></header>
+<div class="eyebrow">Weather outlook</div><h1>Clear information.<br><span class="muted">Whatever the weather.</span></h1>
+<p class="lead">Search for a city and see a simple five-day forecast in metric units. Uses the Visual Crossing Timeline Weather API.</p>
+<form method="post" action="index.php" class="form-card"><label for="city">City or place</label><input id="city" name="city" type="text" placeholder="Thessaloniki, Greece" maxlength="85" value="<?= demo_escape($city) ?>" required><p class="hint">A Visual Crossing API key must be configured in the server environment. It is never shown in this page.</p><button type="submit">Get forecast ↗</button></form>
+<?php if ($error !== null): ?><section class="notice error" role="alert"><h2>Forecast unavailable</h2><p><?= demo_escape($error) ?></p></section><?php endif; ?>
+<?php if ($days !== []): ?><section><h2>Five-day forecast · <?= demo_escape($city) ?></h2><div class="forecast-grid">
+<?php foreach ($days as $day): if (!is_array($day)) continue; ?>
+<article class="forecast"><div class="label"><?= demo_escape(is_scalar($day['datetime'] ?? null) ? $day['datetime'] : '') ?></div><h3><?= demo_escape(is_scalar($day['conditions'] ?? null) ? $day['conditions'] : 'Conditions unknown') ?></h3><p class="metric"><?= is_numeric($day['tempmax'] ?? null) ? demo_escape(round((float) $day['tempmax'])) . '°' : '—' ?></p><p class="hint">Low: <?= is_numeric($day['tempmin'] ?? null) ? demo_escape(round((float) $day['tempmin'])) . '°C' : 'unknown' ?></p></article>
+<?php endforeach; ?></div></section><?php endif; ?>
+<section class="notice"><h2>Forecasts change</h2><p>Weather forecasts are estimates, not guarantees. Check your local weather authority before making safety-sensitive decisions.</p></section><footer>Weather data: Visual Crossing · independent educational demo</footer>
+</main></body></html>

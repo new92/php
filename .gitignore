@@ -1,21 +1,26 @@
-# the composer package lock file and install directory
-# Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
-# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
-# /composer.lock
-/fuel/vendor
+# Editor and operating-system files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
 
-# the fuelphp document
-/docs/
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+*.local.php
 
-# you may install these packages with `oil package`.
-# http://fuelphp.com/docs/packages/oil/package.html
-# /fuel/packages/auth/
-# /fuel/packages/email/
-# /fuel/packages/oil/
-# /fuel/packages/orm/
-# /fuel/packages/parser/
+# Runtime artifacts
+*.log
+/uploads/
+**/uploads/
+/data/
+.cache/
 
-# dynamically generated files
-/fuel/app/logs/*/*/*
-/fuel/app/cache/*/*
-/fuel/app/config/crypt.php
+# Composer-generated dependencies (legacy Spider/vendor is already tracked)
+/vendor/
+
+# Legacy generated header dump (not used by revised Protector)
+/Protector/static/headers.txt
+# Bundled Symfony dependencies are no longer needed by revised Spider
+/Spider/vendor/

@@ -1,9 +1,24 @@
 # DirReader 📖
-A PHP script that allows users to specify a directory to scan. The script analyzes the directory and returns the total count as well as the names of all files and subdirectories it contains
 
-## Run locally 📲
+A small, **local-only** PHP directory browser. Lists immediate child files, directories and symbolic links, without following links or allowing access outside its configured root.
+
+## Run locally
+
+Requires **PHP 8.1+**.
+
 ```bash
 cd DirReader
-php -S localhost:8080
+php -S 127.0.0.1:8080
 ```
-### Then visit: http://localhost:8080/form.php and enter the name of the directory to scan. After that you'll be automatically redirected to DirReaders's results.
+
+Open <http://127.0.0.1:8080/form.html>. Enter `.` to inspect the current project directory or a relative child directory (for example `static`). Results show file and directory counts; symbolic links are listed separately.
+
+By default the allowed root is `DirReader/`. To inspect a different **trusted local** directory, set `DIRREADER_ROOT` to an absolute path **before starting the server**:
+
+```bash
+DIRREADER_ROOT=/path/to/safe/directory php -S 127.0.0.1:8080
+```
+
+On Windows PowerShell, set the variable with `$env:DIRREADER_ROOT='C:\path\to\safe\directory'` before running `php -S 127.0.0.1:8080`.
+
+**Security:** Run this only on your machine. Do not expose the development server to the public internet or point its allowed root at sensitive directories.

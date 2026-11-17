@@ -1,16 +1,24 @@
-![logo](https://github.com/new92/php/assets/94779840/4e3c4548-5f41-4ca8-9c62-49d8768507b2)
+# Investigator · public IP metadata
 
-Investigator is a powerful PHP script designed to gather comprehensive information about any given IP address. With its intuitive interface and robust functionality, Investigator allows users to retrieve various details related to an IP address, aiding in network analysis, troubleshooting, and security assessments.
+Look up approximate public IP geolocation and network metadata using the encrypted [ipwho.is](https://ipwhois.io/documentation) API. IP geolocation does **not** identify a person or their precise physical location.
 
-## Run locally 🖥️
+## Run locally
+
+Requires PHP 8.1+ with **cURL**. From the repository root:
 
 ```bash
 cd Investigator
-php localhost.php
+php -S 127.0.0.1:8080
 ```
 
-## UI ✨
+Open <http://127.0.0.1:8080/index.html>. Enter a valid IPv4 or IPv6 address, such as `8.8.8.8`.
 
-![index](https://github.com/new92/php/assets/94779840/6723f07a-6180-4d0b-b336-9da49844835a)
+## Improvements and privacy
 
-![output](https://github.com/new92/php/assets/94779840/07d17f12-8711-435a-8057-df32e93f31ce)
+- Validates IP input before constructing a URL to a **fixed** third-party API host.
+- Uses HTTPS with certificate verification, timeouts, disabled redirects and a response-size cap.
+- Parses JSON with explicit error handling; escapes all displayed fields.
+- Reports approximate network metadata without claiming geolocation is exact.
+- Entered IP is transmitted to the lookup provider; consult its data policy and rate limits. The free service may be restricted to non-commercial uses.
+
+The provider can return unavailable data or rate-limit requests; the page will show a clear error rather than a guessed result.

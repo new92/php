@@ -1,115 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spider • Dashboard</title>
-    <link rel="stylesheet" type="text/css" href="static/dash.css" />
-    <link rel="icon" type="image/x-icon" href="static/icon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Honk&family=Protest+Strike&display=swap" rel="stylesheet">
-</head>
-<body>
-    <?php
+<?php
 
-    
-    require_once "vendor/autoload.php";
-    use Symfony\Component\BrowserKit\HttpBrowser;
-    use Symfony\Component\HttpClient\HttpClient;
-    use Symfony\Component\DomCrawler\Crawler;
-
-    function categorize(array $social, array $urls, string $host): array {
-        $socials = [];
-        $mails = [];
-        $externals = [];
-        $internals = [];
-        $host = parse_url($host, PHP_URL_HOST);
-        $host = explode('.', $host)[0];
-        for ($i = 0; $i < count($urls); $i++) {
-            for ($j = 0; $j < count($social); $j++) {
-                if (str_contains($urls[$i], $social[$j]) && !(in_array($urls[$i], $socials))) {
-                    array_push($socials, $urls[$i]);
-                    continue;
-                }
-            }
-            if (str_contains($urls[$i], 'mailto')) {
-                preg_match('/mailto:(.*)/', $urls[$i], $email);
-                $email = $email[1];
-                if (!(in_array($email, $mails))) {
-                    array_push($mails, $email);
-                    continue;
-                }
-            } elseif (!str_contains($urls[$i], $host) && !(in_array($urls[$i], $externals))) {
-                array_push($externals, $urls[$i]);
-            } elseif (str_contains($urls[$i], $host) && !(in_array($urls[$i], $internals))) {
-                array_push($internals, $urls[$i]);
-            }
+declare(strict_types=1);
+require_once __DIR__ . '/../shared/safe_http.php';
+require_once __DIR__ . '/links.php';
+header('Content-Type: text/html; charset=utf-8');
+header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
+header("Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'none'");
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Allow: POST');
+    http_response_code(405);
+    exit('Use the local Spider form to submit a URL.');
+}
+$url = $_POST['url'] ?? null;
+$links = [];
+$error = null;
+if (!is_string($url)) {
+    $error = 'Enter an HTTPS URL.';
+} else {
+    try {
+        $target = trim($url);
+        $resp = DemoSafeHttp::fetch($target, false, 524288);
+        $type = strtolower(implode(', ', $resp['headers']['content-type'] ?? []));
+        if ($type !== '' && !str_contains($type, 'text/html') && !str_contains($type, 'application/xhtml+xml')) {
+            throw new RuntimeException('The remote resource is not an HTML page.');
         }
-        return array($socials, $mails, $externals, $internals);
+        $links = SpiderLinks::extract($resp['body'], $target, 200);
+    } catch (Throwable $exception) {
+        $error = $exception->getMessage();
     }
-
-    $browser = new HttpBrowser(HttpClient::create());
-    $host = $_POST['url'];
-    $resp = $browser->request('GET', $host);
-    $html = $browser->getResponse()->getContent();
-    $crawler = new Crawler($html, $host);
-    $urls = $crawler->filter('a')->each(function ($node) {
-        return $node->link()->getUri();
-    });
-    $socials = array(
-        'facebook',
-        'instagram',
-        'twitter',
-        'linkedin',
-        'youtube',
-        'snapchat',
-        'pinterest',
-        'reddit',
-        'tumblr',
-        'whatsapp',
-        'telegram',
-        'tiktok',
-        'wechat',
-        'vkontakte',
-        'discord',
-        'medium',
-        'quora',
-        'flickr',
-        'meetup',
-        'goodreads'
-    );
-
-    $cats = categorize($socials, $urls, $host);
-    $socs = $cats[0];
-    $mails = $cats[1];
-    $externals = $cats[2];
-    $internals = $cats[3];
-    for ($i = 0; $i < count($urls); $i++) {
-        array_push($socs, NULL);
-        array_push($mails, NULL);
-        array_push($externals, NULL);
-        array_push($internals, NULL);
-    }
-    ?>
-    <center>
-        <div class="widget">
-            <h2>Extracted URLs</h2>
-            <table>
-                <tr>
-                    <th>Exctracted URLs</th>
-                    <th>Socials</th>
-                    <th>Mails</th>
-                    <th>External URLs</th>
-                    <th>Internal URLs</th>
-                </tr>
-                <?php
-                    for ($i = 0; $i < count($urls); $i++) {
-                        echo '<tr><td><a href="' . $urls[$i] . '" target="_blank">' . $urls[$i] . '</a></td><td><a href="' . $socs[$i] . '" target="_blank">' . $socs[$i] . '</a></td><td><a href="' . $mails[$i] . '" target="_blank">' . $mails[$i] . '</a></td><td><a href="' . $externals[$i] . '" target="_blank">' . $externals[$i] . '</a></td><td><a href="' . $internals[$i] . '" target="_blank">' . $internals[$i] . '</a></td></tr>';
-                    }
-                ?>
-            </table>
-        </div>
-    </center>
-</body>
-</html>
+}
+if ($error !== null) { http_response_code(422); }
+$counts = array_count_values(array_column($links, 'type'));
+?>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Results · Spider</title><link rel="stylesheet" href="static/ui.css"></head>
+<body><main class="container">
+<header class="nav"><a class="brand" href="input.html">◉ Spider</a><a href="input.html">New inspection ↗</a></header>
+<div class="eyebrow">Single-page link analysis · local only</div><h1>Links, organized.<br><span class="muted">Clearly and safely.</span></h1>
+<p class="lead">Read up to 200 unique links from one approved HTML page. Spider does not recursively crawl, follow redirects, or access arbitrary hosts.</p>
+<?php if ($error !== null): ?>
+<section class="notice error" role="alert"><h2>Unable to inspect page</h2><p><?= demo_escape($error) ?></p><p>Set <code>PHP_DEMO_ALLOWED_HOSTS</code> to the exact public hostname before running this demo.</p></section>
+<?php else: ?>
+<section class="summary"><div><span class="label">Scanned URL</span><p class="mono break"><?= demo_escape($url) ?></p></div><div><span class="label">Unique links</span><p class="metric"><?= count($links) ?></p></div><div><span class="label">Internal / external</span><p class="metric"><?= (int) ($counts['Internal'] ?? 0) ?> / <?= (int) ($counts['External'] ?? 0) ?></p></div></section>
+<section class="notice"><h2>Classification notes</h2><p>Social links and email addresses are counted separately. Internal means the same hostname or its subdomains; links are extracted from a single page, not followed. Only HTTPS links and valid email addresses are displayed.</p></section>
+<section><h2>Extracted links</h2><div class="table-scroll"><table><thead><tr><th scope="col">Category</th><th scope="col">Destination</th></tr></thead><tbody>
+<?php foreach ($links as $link): ?>
+<tr><td><span class="pill"><?= demo_escape($link['type']) ?></span></td><td class="break">
+<?php if ($link['type'] === 'Email'): ?><?= demo_escape(substr($link['url'], 7)) ?>
+<?php else: ?><a target="_blank" rel="noopener noreferrer nofollow" href="<?= demo_escape($link['url']) ?>"><?= demo_escape($link['url']) ?></a><?php endif; ?>
+</td></tr>
+<?php endforeach; ?>
+</tbody></table></div></section>
+<?php endif; ?>
+<footer>Educational demonstration · one HTTPS request · no recursive crawling</footer>
+</main></body></html>

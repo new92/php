@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Protector • Input</title>
-    <link rel="icon" type="image/x-icon" href="static/icon.png" />
-    <link rel="stylesheet" type="text/css" href="static/style.css" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Single+Day&display=swap" rel="stylesheet">
-</head>
-<body>
-    <center>
-        <p class="text">Protector</p>
-        <div class="url-input-container">
-            <form action="protector.php" method="post">
-                <input type="url" class="url-input" name="url" placeholder="Enter URL for scanning" required style="font-size: 16px; font-family: 'Anton', sans-serif;" autocomplete="url" />
-                <br><br>
-                <input type="text" class="url-input" name="host" placeholder="Enter host" maxlength="13" required style="font-size: 16px; font-family: 'Anton', sans-serif;"/>
-                <br><br>
-                <button type="submit" name="submit" class="submit-btn">Scan</button>
-            </form>
-        </div>
-    </center>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Constrained educational HTTPS response inspector."><title>Protector · HTTPS response inspector</title><link rel="stylesheet" href="static/ui.css"></head>
+<body><main class="container"><header class="nav"><span class="brand">✳ Protector</span><span class="label">Local security lab</span></header>
+<div class="eyebrow">HTTP response analysis</div><h1>Understand what<br><span class="muted">a server reveals.</span></h1>
+<p class="lead">Examine basic HTTPS headers and status codes. This tool never labels a website safe or unsafe.</p>
+<form action="protector.php" method="post" class="form-card"><label for="url">HTTPS URL</label><input id="url" type="url" name="url" placeholder="https://example.com/" autocomplete="url" maxlength="2048" pattern="https://.*" required><p class="hint">Only exact hosts explicitly allowlisted by your local administrator can be inspected. Redirects and private-network addresses are blocked.</p><button type="submit">Inspect response <span aria-hidden="true">↗</span></button></form>
+<section class="notice"><h2>A responsible tool by design</h2><p>Run locally, and inspect sites you own or have permission to test. A valid TLS certificate or matching IP does not establish trustworthiness.</p></section>
+<footer>Independent educational example · not a phishing detection service</footer></main></body></html>

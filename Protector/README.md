@@ -1,22 +1,29 @@
-# Protector 🛡️
+# Protector · HTTPS response inspector
 
-A php script which analyzes URLs and returns a status and some extra info about the website's safety. So simply it's a php script to detect if a url is redirecting to a phising website or not.
+Educational tool for inspecting HTTP status and response headers of an **explicitly allowlisted public HTTPS website**. It **does not detect phishing** or claim a site is safe based on IP addresses, TLS or headers.
 
-## Run locally 💻
+## Requirements and local run
+
+PHP 8.1+ with the **cURL** extension. From the repository root:
 
 ```bash
+# macOS / Linux / Git Bash; only test sites you own or have permission to inspect
+export PHP_DEMO_ALLOWED_HOSTS=example.com
 cd Protector
-php localhost.php
+php -S 127.0.0.1:8080
 ```
 
-## UI ✨
+In **Windows PowerShell** set `$env:PHP_DEMO_ALLOWED_HOSTS='example.com'` before launching `php -S 127.0.0.1:8080` in `Protector`.
 
-![input](https://github.com/new92/php/assets/94779840/e32b5014-3004-4646-b1de-50b384e3cea9)
+Open <http://127.0.0.1:8080/input.html> and enter `https://example.com/`. Multiple exact hosts can be comma-separated. No wildcard or suffix matching is performed. By default **nothing is allowlisted**.
 
-![review](https://github.com/new92/php/assets/94779840/9a2bcce5-723f-4e60-bd05-6ea8bfa4a358)
+## Security model
 
-![headers](https://github.com/new92/php/assets/94779840/ac29ba23-06d0-4649-9f9e-155938807524)
+- Eliminates the misleading shared-IP safety verdict.
+- Removes disabled SSL checks, arbitrary-host requests, iframe previews, and shared `static/headers.txt` exports.
+- Rejects IP-literal, local, non-HTTPS, unallowlisted and nonstandard-port URLs.
+- Rejects private/reserved DNS results and pins validated public IPv4 addresses for each connection.
+- Blocks redirects, uses short timeouts, caps responses and escapes all output.
+- Fetches **headers only**, without rendering remote HTML.
 
-![suspicious_input](https://github.com/new92/php/assets/94779840/ef75c0ff-6712-4de5-b8cc-13355f894a01)
-
-![review_suspicious_input](https://github.com/new92/php/assets/94779840/1e2536f1-e5bc-4797-b271-54dfa4e68283)
+**Limitations:** This is not a complete defense for a publicly accessible multi-user URL inspector. Enforce network-level egress filtering, authentication and quotas before public deployment. No reputation or malware scanning is performed.

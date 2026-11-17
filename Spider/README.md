@@ -1,17 +1,31 @@
-<p align="center"><img src="https://github.com/new92/php/assets/94779840/f6b1fb97-1862-4628-b683-8751287937a3" style="height: 500px; width: 850px;"/></p>
+# Spider · single-page link analyzer
 
-Spider is a PHP script designed to crawl through a given website and extract all the URLs present within its pages. This script provides a simple yet effective way to gather URLs for various purposes such as indexing, data analysis, or link validation.
+Extract and categorize up to **200 unique links** from one explicitly approved HTML page. HTTPS links are classified as internal, external, or social; `mailto:` addresses are shown separately. Spider does **not** follow links or redirects.
 
-## Run locally 🖥️
+## Run locally
+
+Requires PHP 8.1+ with the **cURL** and **DOM/XML** extensions. Composer is **not needed for the revised Spider**, which uses built-in HTML DOM parsing instead of the checked-in legacy Symfony `vendor/` directory.
+
+From the repository root:
 
 ```bash
+# Linux, macOS or Git Bash
+export PHP_DEMO_ALLOWED_HOSTS=example.com
 cd Spider
-php localhost.php
+php -S 127.0.0.1:8080
 ```
 
-## UI ✨
+For PowerShell: `$env:PHP_DEMO_ALLOWED_HOSTS='example.com'` before starting the local PHP server.
 
-![menu](https://github.com/new92/php/assets/94779840/2d3758d3-e05f-42af-a0db-1ce103ba5034)
+Open <http://127.0.0.1:8080/input.html> and enter `https://example.com/`.
 
-![extracted urls](https://github.com/new92/php/assets/94779840/57b78a2a-c2a2-40ab-a0a1-9b17d80cee30)
+## Safeguards and limitations
 
+- Host allowlist **required**; defaults to an empty list. Exact hostname matching only.
+- HTTPS port 443 only, no userinfo credentials, local IP targets or redirects.
+- DNS lookups require public IPv4 addresses; connections are pinned to verified IPs. IPv6-only sites are not supported.
+- 4-second connect, 10-second overall timeout; 512 KiB response body cap.
+- HTML parsing disables external network access and outputs escaped links; `javascript:`/`data:` links are ignored.
+- One request only, no recursion. Limits do not replace authentication, quotas or network-level egress filtering for public deployments.
+
+**Only inspect websites you own or have permission to inspect.** The existing `Spider/vendor` folder is no longer used by the new dashboard; remove the tracked legacy dependencies in a separate, reviewed cleanup commit if desired.

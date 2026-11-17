@@ -1,0 +1,36 @@
+name: PHP checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-smoke:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.1', '8.3', '8.4']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          coverage: none
+          extensions: curl, dom, fileinfo
+      - name: Syntax check first-party PHP
+        run: find . -type f -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l
+      - name: Test bounded directory browsing
+        run: php tests/dirreader_test.php
+      - name: Test safe cleaner behavior
+        run: bash tests/cleaner_smoke.sh
+      - name: Test image upload validation
+        run: bash tests/uploader_smoke.sh
+      - name: Test network validators and link classification
+        run: php tests/network_guard_test.php && php tests/validation_test.php && php tests/spider_parser_test.php
+      - name: Test invalid-input behavior over HTTP
+        run: bash tests/web_guard_smoke.sh

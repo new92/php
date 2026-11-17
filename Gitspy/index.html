@@ -1,24 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Index • Gitspy</title>
-    <link rel="stylesheet" type="text/css" href="./static/style.css" />
-    <link rel="icon" type="image/x-icon" href="./static/icon.png" />
-</head>
-<body>
-    <!-- Gitspy 🕵️ by @new92 -->
-    <div class="container">
-        <div class="logo-container">
-            <img src="./static/weblogo.png" alt="Gitspy Logo" class="logo" />
-        </div>
-        <div class="search-container">
-            <form action="spy.php" method="post" class="search-form">
-                <input type="text" name="username" placeholder="Enter GitHub username" class="search-input">
-                <button type="submit" class="search-button" name="search">Search</button>
-            </form>
-        </div>
-    </div>
-</body>
-</html>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Explore public GitHub profile information with Gitspy."><title>Gitspy · GitHub profile explorer</title><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
+<header class="nav"><span class="brand">◇ Gitspy</span><span class="label">Open-source research lab</span></header><div class="eyebrow">Public developer profiles</div><h1>See the work.<br><span class="muted">Meet the builder.</span></h1>
+<p class="lead">Explore a GitHub account's public repositories, followers and activity from GitHub's official API. No login required.</p>
+<form action="spy.php" method="post" class="form-card"><label for="username">GitHub username</label><input id="username" type="text" name="username" placeholder="octocat" maxlength="39" required autocomplete="off" pattern="[A-Za-z0-9]+(-[A-Za-z0-9]+)*"><p class="hint">Only public profile information is displayed. API rate limits apply.</p><button type="submit">Explore profile ↗</button></form>
+<section class="notice"><h2>Built for responsible research</h2><p>Gitspy uses GitHub's public API, validates usernames, escapes API content, and clearly distinguishes account totals from paginated list previews.</p></section>
+<footer>Independent educational demo · not affiliated with GitHub</footer></main></body></html>

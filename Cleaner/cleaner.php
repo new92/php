@@ -1,66 +1,70 @@
 <?php
-/*
-Author: new92
-*/
-function total($path) {
-    $size = 0;
-    $items = scandir($path);
-    foreach ($items as $item) {
-        if ($item != '.' && $item != '..') {
-            if (is_file($item)) {
-                $size += filesize($item);
-            } elseif (is_dir($item)) {
-                $size += total($path . '\\' . $item);
+
+declare(strict_types=1);
+
+// Deliberately CLI-only: visiting a web page must never delete files.
+if (PHP_SAPI !== 'cli') {
+    http_response_code(403);
+    header('Content-Type: text/plain; charset=utf-8');
+    exit("Cleaner is a CLI-only tool.\n");
+}
+
+$options = getopt('', ['dir:', 'apply', 'help']);
+if (isset($options['help']) || !isset($options['dir']) || !is_string($options['dir'])) {
+    echo "Usage: php cleaner.php --dir=/path/to/temp-subdirectory [--apply]\n";
+    echo "Dry-run is the default. --apply deletes contents (not the chosen folder).\n";
+    exit(isset($options['help']) ? 0 : 2);
+}
+
+$tempRoot = realpath(sys_get_temp_dir());
+$target = realpath($options['dir']);
+if ($tempRoot === false || $target === false || !is_dir($target)) {
+    fwrite(STDERR, "Error: The directory does not exist.\n");
+    exit(2);
+}
+
+// Never touch the system temp root itself or paths outside it.
+$compareRoot = PHP_OS_FAMILY === 'Windows' ? strtolower($tempRoot) : $tempRoot;
+$compareTarget = PHP_OS_FAMILY === 'Windows' ? strtolower($target) : $target;
+$prefix = rtrim($compareRoot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+if (!str_starts_with($compareTarget, $prefix)) {
+    fwrite(STDERR, "Error: Select a subdirectory inside the system temporary folder.\n");
+    exit(2);
+}
+
+$apply = isset($options['apply']);
+$count = 0;
+$bytes = 0;
+$failures = 0;
+try {
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($target, FilesystemIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::CHILD_FIRST
+    );
+    foreach ($iterator as $entry) {
+        $path = $entry->getPathname();
+        // Directory symlinks are removed as links, never traversed.
+        $isDirectory = $entry->isDir() && !$entry->isLink();
+        if (!$isDirectory) {
+            $bytes += $entry->isLink() ? 0 : $entry->getSize();
+        }
+        echo ($apply ? 'Delete: ' : 'Would delete: ') . $path . PHP_EOL;
+        $count++;
+        if ($apply) {
+            $success = $isDirectory ? @rmdir($path) : @unlink($path);
+            if (!$success) {
+                $failures++;
+                fwrite(STDERR, "Failed to remove: $path\n");
             }
         }
     }
-    return $size;
+} catch (UnexpectedValueException $exception) {
+    fwrite(STDERR, "Error scanning directory: {$exception->getMessage()}\n");
+    exit(1);
 }
 
-function remove($real) {
-    $files = $size = 0;
-    $items = scandir($real);
-    foreach ($items as $item) {
-        if ($item != '.' && $item != '..') {
-            $path = realpath($real . '\\' . $item);
-            if (is_file($path)) {
-                $size += filesize($path);
-                if (unlink($path)) {
-                    $files++;
-                    echo 'Removed >>> ' . $path . '<br>';
-                } else {
-                    $size -= filesize($path);
-                    echo 'Unable to remove >>> ' . $path . '<br>';
-                }
-            } elseif (is_dir($path)) {
-                $fls = scandir($path);
-                if ($fls == 2) {
-                    rmdir($path);
-                    echo 'Removed >>> ' . $path . '<br>';
-                    $files++;
-                } else {
-                    $size += remove($path);
-                    rmdir($path);
-                    echo 'Removed >>> ' . $path . '<br>';
-                }
-            }
-        }
-    }
-    echo 'Removed >>> ' . $files . ' items<br>';
-    return $size;
+printf("%s: %d entries, %d bytes (estimated).\n", $apply ? 'Processed' : 'Dry run', $count, $bytes);
+if (!$apply) {
+    echo "No files were deleted. Pass --apply to remove the listed items.\n";
 }
-
-$temp = sys_get_temp_dir();
-$items = scandir($temp);
-$total = total($temp);
-if (is_writable($temp)) {
-    $size = remove($temp);
-} else {
-    die('ERROR ==> User does not have the necessary permissions to delete temp files.');
-}
-
-echo '<br><br>[✓] Successfully removed temp items.';
-
-echo '<br><br>[+] Total size removed | ' . $size . '/' . $total;
-
-?>
+exit($failures === 0 ? 0 : 1);
