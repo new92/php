@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A private local image uploader for small files.">
+  <meta name="theme-color" content="#07111c">
+  <title>File Uploader · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="uploader">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="index.html" aria-label="File Uploader home"><span class="brand-mark" aria-hidden="true">⇧</span> File Uploader</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="index.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero"><div><div class="eyebrow">06 / Local file handling</div><h1>Drop a file.<br><span class="highlight">Keep it private.</span></h1><p>Upload a small image into private local storage using server-side content validation and unpredictable filenames.</p><div class="chips"><span class="chip">JPEG · PNG · GIF</span><span class="chip">Up to 500 KB</span><span class="chip">Private storage</span></div></div>
+<aside class="hero-visual" aria-label="FILE UPLOADER / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">FILE UPLOADER / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">⇧</div><div class="visual-lines"><div class="visual-row"><span>Verification</span><strong>MIME + image content</strong></div><div class="visual-row"><span>Storage</span><strong>Outside web root</strong></div><div class="visual-row"><span>Filename</span><strong>Randomized</strong></div></div>
+  </aside></section>
+<section class="workspace"><form action="upload.php" method="post" enctype="multipart/form-data" class="form-card" data-submit-state><div class="form-header"><h2>Upload an image</h2><span class="form-index">01 / UPLOAD</span></div>
+<div class="dropzone" id="upload-dropzone"><div class="drop-icon" aria-hidden="true">⇪</div><strong>Drag an image here</strong><p>or select one using the file picker</p><label class="field" for="upload-file">Choose an image</label><input id="upload-file" type="file" name="file" accept="image/jpeg,image/png,image/gif,.jpg,.jpeg,.png,.gif" required aria-describedby="upload-feedback"></div>
+<div id="upload-feedback" class="hint" role="status" aria-live="polite">JPEG, PNG or GIF · maximum 500 KB</div><div id="upload-preview" class="file-preview" hidden></div>
+<button class="button full" type="submit">Upload to private storage <span aria-hidden="true">↗</span></button></form>
+<aside class="card"><div class="form-header"><h2>What happens next?</h2><span class="form-index">02 / SAFETY</span></div><div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Check actual image data</strong><p>The server validates image content, not just the extension.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Save privately</strong><p>A new random filename is generated outside the web root.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Receive confirmation</strong><p>The success page never exposes internal storage paths.</p></div></div></div></aside></section>
+<section class="notice warning"><h2>Local demo only</h2><p>This uploader has no authentication, quotas, or malware scanning. It is not suitable for public deployment or handling sensitive files.</p></section>
+<footer class="footer"><span>File Uploader · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
+</main></body></html>

@@ -22,3 +22,8 @@ DIRREADER_ROOT=/path/to/safe/directory php -S 127.0.0.1:8080
 On Windows PowerShell, set the variable with `$env:DIRREADER_ROOT='C:\path\to\safe\directory'` before running `php -S 127.0.0.1:8080`.
 
 **Security:** Run this only on your machine. Do not expose the development server to the public internet or point its allowed root at sensitive directories.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

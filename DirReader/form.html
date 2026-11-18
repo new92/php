@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="List the immediate files and folders inside a configured, permitted local directory. No recursive traversal.">
+  <meta name="theme-color" content="#07111c">
+  <title>DirReader · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="DirReader">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="form.html" aria-label="DirReader home"><span class="brand-mark" aria-hidden="true">▤</span> DirReader</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="form.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero" aria-labelledby="page-title"><div>
+<div class="eyebrow">05 / Local filesystem</div>
+<h1 id="page-title">Browse the directory.<br><span class="highlight">Stay in bounds.</span></h1>
+<p>List the immediate files and folders inside a configured, permitted local directory. No recursive traversal.</p>
+<div class="chips"><span class="chip">Root confinement</span><span class="chip">Read-only</span><span class="chip">Escaped results</span></div>
+</div><aside class="hero-visual" aria-label="DIRREADER / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">DIRREADER / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">▤</div><div class="visual-lines"><div class="visual-row"><span>Scope</span><strong>Configured root</strong></div><div class="visual-row"><span>Depth</span><strong>One directory</strong></div><div class="visual-row"><span>Symlinks</span><strong>Not followed</strong></div></div>
+  </aside></section>
+<section class="workspace" aria-label="Start working">
+<form action="reader.php" method="post" class="form-card" data-submit-state >
+<div class="form-header"><h2>Browse a directory</h2><span class="form-index">01 / INPUT</span></div>
+<label for="primary-input" class="field">Relative directory path</label>
+<input class="input" id="primary-input" type="text" name="dir" placeholder="." maxlength="255"  required autocomplete="off" spellcheck="false">
+<p class="hint">Enter . for the configured root or a relative child path. DIRREADER_ROOT defines the allowed boundary.</p>
+<button class="button full" type="submit">List entries <span aria-hidden="true">↗</span></button>
+</form>
+<aside class="card"><div class="form-header"><h2>How it works</h2><span class="form-index">02 / GUIDE</span></div>
+<div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Choose the root</strong><p>Optionally set DIRREADER_ROOT to a trusted folder.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Enter a relative path</strong><p>Use a child directory such as static or a dot for the root.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Review the listing</strong><p>Search filenames and inspect file and directory counts.</p></div></div></div>
+</aside>
+</section>
+<section class="notice warning" aria-label="Important limitation"><h2>Use only on your own machine</h2><p>Even read-only directory listings reveal information about file names. Never expose this utility to an untrusted network.</p></section>
+<footer class="footer"><span>DirReader · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
+</main></body></html>

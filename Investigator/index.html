@@ -1,4 +1,43 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investigator · IP metadata explorer</title><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
-<header class="nav"><span class="brand">◎ Investigator</span><span class="label">Network research lab</span></header><div class="eyebrow">IP metadata</div><h1>Map the network.<br><span class="muted">Respect the context.</span></h1><p class="lead">Look up public network and approximate geolocation data for an IPv4 or IPv6 address.</p>
-<form method="post" action="output.php" class="form-card"><label for="ip">IP address</label><input id="ip" name="ip" type="text" placeholder="8.8.8.8" maxlength="45" autocomplete="off" required><p class="hint">The entered IP address is shared with a third-party lookup provider over HTTPS. Do not submit sensitive or private information.</p><button type="submit">Look up IP ↗</button></form>
-<section class="notice"><h2>Interpret responsibly</h2><p>Geolocation may identify an ISP or approximate region, not a person or a precise physical location. Never use an IP lookup alone to attribute activity.</p></section><footer>Independent educational utility · approximate data only</footer></main></body></html>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Get a concise overview of publicly available IP network metadata and approximate location information.">
+  <meta name="theme-color" content="#07111c">
+  <title>Investigator · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="Investigator">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="index.html" aria-label="Investigator home"><span class="brand-mark" aria-hidden="true">◎</span> Investigator</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="index.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero" aria-labelledby="page-title"><div>
+<div class="eyebrow">02 / Network context</div>
+<h1 id="page-title">See beyond an IP.<br><span class="highlight">Without assumptions.</span></h1>
+<p>Get a concise overview of publicly available IP network metadata and approximate location information.</p>
+<div class="chips"><span class="chip">Network metadata</span><span class="chip">IP validation</span><span class="chip">HTTPS provider</span></div>
+</div><aside class="hero-visual" aria-label="INVESTIGATOR / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">INVESTIGATOR / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">◎</div><div class="visual-lines"><div class="visual-row"><span>Input</span><strong>IPv4 / IPv6</strong></div><div class="visual-row"><span>Transport</span><strong>HTTPS</strong></div><div class="visual-row"><span>Output</span><strong>Approximate context</strong></div></div>
+  </aside></section>
+<section class="workspace" aria-label="Start working">
+<form action="output.php" method="post" class="form-card" data-submit-state >
+<div class="form-header"><h2>Network lookup</h2><span class="form-index">01 / INPUT</span></div>
+<label for="primary-input" class="field">IPv4 or IPv6 address</label>
+<input class="input" id="primary-input" type="text" name="ip" placeholder="8.8.8.8" maxlength="255"  required autocomplete="off" spellcheck="false">
+<p class="hint">Only valid IP addresses are accepted. This query is sent to a third-party provider.</p>
+<button class="button full" type="submit">Look up address <span aria-hidden="true">↗</span></button>
+</form>
+<aside class="card"><div class="form-header"><h2>How it works</h2><span class="form-index">02 / GUIDE</span></div>
+<div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Enter an IP address</strong><p>Paste a numeric public IPv4 or IPv6 address.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Fetch metadata</strong><p>The server queries the external IP lookup provider over HTTPS.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Interpret cautiously</strong><p>Data may identify the network owner, not a person or precise location.</p></div></div></div>
+</aside>
+</section>
+<section class="notice warning" aria-label="Important limitation"><h2>IP metadata is not identity</h2><p>Geolocation is approximate and frequently reflects providers or network infrastructure. Do not infer a person’s address or identity from this result.</p></section>
+<footer class="footer"><span>Investigator · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
+</main></body></html>

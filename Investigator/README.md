@@ -22,3 +22,8 @@ Open <http://127.0.0.1:8080/index.html>. Enter a valid IPv4 or IPv6 address, suc
 - Entered IP is transmitted to the lookup provider; consult its data policy and rate limits. The free service may be restricted to non-commercial uses.
 
 The provider can return unavailable data or rate-limit requests; the page will show a clear error rather than a guessed result.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

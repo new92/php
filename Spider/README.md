@@ -29,3 +29,8 @@ Open <http://127.0.0.1:8080/input.html> and enter `https://example.com/`.
 - One request only, no recursion. Limits do not replace authentication, quotas or network-level egress filtering for public deployments.
 
 **Only inspect websites you own or have permission to inspect.** The existing `Spider/vendor` folder is no longer used by the new dashboard; remove the tracked legacy dependencies in a separate, reviewed cleanup commit if desired.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

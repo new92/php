@@ -1,7 +1,43 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Constrained educational HTTPS response inspector."><title>Protector · HTTPS response inspector</title><link rel="stylesheet" href="static/ui.css"></head>
-<body><main class="container"><header class="nav"><span class="brand">✳ Protector</span><span class="label">Local security lab</span></header>
-<div class="eyebrow">HTTP response analysis</div><h1>Understand what<br><span class="muted">a server reveals.</span></h1>
-<p class="lead">Examine basic HTTPS headers and status codes. This tool never labels a website safe or unsafe.</p>
-<form action="protector.php" method="post" class="form-card"><label for="url">HTTPS URL</label><input id="url" type="url" name="url" placeholder="https://example.com/" autocomplete="url" maxlength="2048" pattern="https://.*" required><p class="hint">Only exact hosts explicitly allowlisted by your local administrator can be inspected. Redirects and private-network addresses are blocked.</p><button type="submit">Inspect response <span aria-hidden="true">↗</span></button></form>
-<section class="notice"><h2>A responsible tool by design</h2><p>Run locally, and inspect sites you own or have permission to test. A valid TLS certificate or matching IP does not establish trustworthiness.</p></section>
-<footer>Independent educational example · not a phishing detection service</footer></main></body></html>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Read response status and selected HTTPS headers from an explicitly approved public host. Designed for educational HTTP inspection.">
+  <meta name="theme-color" content="#07111c">
+  <title>Protector · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="Protector">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="input.html" aria-label="Protector home"><span class="brand-mark" aria-hidden="true">✳</span> Protector</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="input.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero" aria-labelledby="page-title"><div>
+<div class="eyebrow">03 / HTTPS observability</div>
+<h1 id="page-title">Inspect the headers.<br><span class="highlight">Not the reputation.</span></h1>
+<p>Read response status and selected HTTPS headers from an explicitly approved public host. Designed for educational HTTP inspection.</p>
+<div class="chips"><span class="chip">Approved targets</span><span class="chip">TLS verification</span><span class="chip">Response headers</span></div>
+</div><aside class="hero-visual" aria-label="PROTECTOR / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">PROTECTOR / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">✳</div><div class="visual-lines"><div class="visual-row"><span>Protocol</span><strong>HTTPS only</strong></div><div class="visual-row"><span>Destination</span><strong>Allowlisted host</strong></div><div class="visual-row"><span>Verdict</span><strong>Not provided</strong></div></div>
+  </aside></section>
+<section class="workspace" aria-label="Start working">
+<form action="protector.php" method="post" class="form-card" data-submit-state >
+<div class="form-header"><h2>Inspect a response</h2><span class="form-index">01 / INPUT</span></div>
+<label for="primary-input" class="field">Approved HTTPS URL</label>
+<input class="input" id="primary-input" type="url" name="url" placeholder="https://example.com/" maxlength="2048" pattern="https://.*" required autocomplete="off" spellcheck="false">
+<p class="hint">Add exact authorized hostnames to PHP_DEMO_ALLOWED_HOSTS before starting PHP. Private IPs and redirects are blocked.</p>
+<button class="button full" type="submit">Inspect headers <span aria-hidden="true">↗</span></button>
+</form>
+<aside class="card"><div class="form-header"><h2>How it works</h2><span class="form-index">02 / GUIDE</span></div>
+<div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Authorize the destination</strong><p>Set PHP_DEMO_ALLOWED_HOSTS on the local server.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Submit a URL</strong><p>Use an HTTPS address belonging to an approved host.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Read the response</strong><p>Review status, connected IP, and headers—not a safety score.</p></div></div></div>
+</aside>
+</section>
+<section class="notice warning" aria-label="Important limitation"><h2>Not a phishing detector</h2><p>Headers, TLS certificates and IPs cannot establish whether a website is trustworthy. Only inspect systems you own or have permission to test.</p></section>
+<footer class="footer"><span>Protector · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
+</main></body></html>

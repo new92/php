@@ -1,6 +1,43 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Explore public GitHub profile information with Gitspy."><title>Gitspy · GitHub profile explorer</title><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
-<header class="nav"><span class="brand">◇ Gitspy</span><span class="label">Open-source research lab</span></header><div class="eyebrow">Public developer profiles</div><h1>See the work.<br><span class="muted">Meet the builder.</span></h1>
-<p class="lead">Explore a GitHub account's public repositories, followers and activity from GitHub's official API. No login required.</p>
-<form action="spy.php" method="post" class="form-card"><label for="username">GitHub username</label><input id="username" type="text" name="username" placeholder="octocat" maxlength="39" required autocomplete="off" pattern="[A-Za-z0-9]+(-[A-Za-z0-9]+)*"><p class="hint">Only public profile information is displayed. API rate limits apply.</p><button type="submit">Explore profile ↗</button></form>
-<section class="notice"><h2>Built for responsible research</h2><p>Gitspy uses GitHub's public API, validates usernames, escapes API content, and clearly distinguishes account totals from paginated list previews.</p></section>
-<footer>Independent educational demo · not affiliated with GitHub</footer></main></body></html>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A thoughtful view of public GitHub profiles, repositories, followers and activity. Search by username—no GitHub sign-in required.">
+  <meta name="theme-color" content="#07111c">
+  <title>Gitspy · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="Gitspy">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="index.html" aria-label="Gitspy home"><span class="brand-mark" aria-hidden="true">⌘</span> Gitspy</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="index.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero" aria-labelledby="page-title"><div>
+<div class="eyebrow">01 / Developer intelligence</div>
+<h1 id="page-title">Explore public code.<br><span class="highlight">Understand the maker.</span></h1>
+<p>A thoughtful view of public GitHub profiles, repositories, followers and activity. Search by username—no GitHub sign-in required.</p>
+<div class="chips"><span class="chip">Public profiles</span><span class="chip">Repositories & networks</span><span class="chip">Read-only</span></div>
+</div><aside class="hero-visual" aria-label="GITSPY / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">GITSPY / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">⌘</div><div class="visual-lines"><div class="visual-row"><span>Data source</span><strong>GitHub public API</strong></div><div class="visual-row"><span>Profile lists</span><strong>Up to 30 items</strong></div><div class="visual-row"><span>Privacy</span><strong>No sign-in</strong></div></div>
+  </aside></section>
+<section class="workspace" aria-label="Start working">
+<form action="spy.php" method="post" class="form-card" data-submit-state >
+<div class="form-header"><h2>Explore an account</h2><span class="form-index">01 / INPUT</span></div>
+<label for="primary-input" class="field">GitHub username</label>
+<input class="input" id="primary-input" type="text" name="username" placeholder="octocat" maxlength="255" pattern="[A-Za-z0-9]+(-[A-Za-z0-9]+)*" required autocomplete="off" spellcheck="false">
+<p class="hint">Public data only. GitHub API limits apply. No account login is requested.</p>
+<button class="button full" type="submit">Explore profile <span aria-hidden="true">↗</span></button>
+</form>
+<aside class="card"><div class="form-header"><h2>How it works</h2><span class="form-index">02 / GUIDE</span></div>
+<div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Enter a username</strong><p>Use a GitHub account name such as octocat.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Retrieve public data</strong><p>Gitspy requests the public profile and a limited preview of its lists.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Explore the dashboard</strong><p>Review repositories, follower counts and profile details.</p></div></div></div>
+</aside>
+</section>
+<section class="notice warning" aria-label="Important limitation"><h2>Respect privacy and API limits</h2><p>Only public information is shown. Lists can be incomplete because Gitspy retrieves a limited number of records. Gitspy is not affiliated with GitHub.</p></section>
+<footer class="footer"><span>Gitspy · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
+</main></body></html>

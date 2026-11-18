@@ -1,112 +1,228 @@
-<img width="1200" height="670" alt="logo" src="https://github.com/user-attachments/assets/1f6f2cb2-2933-4fb2-bf7c-ee68c6925997" />
+<img width="1200" height="670" alt="PHP Utilities project banner" src="https://github.com/user-attachments/assets/1f6f2cb2-2933-4fb2-bf7c-ee68c6925997" />
 
+A collection of **seven browser-based PHP applications and one command-line utility**, developed by [new92](https://github.com/new92) for web development, public-data research, filesystem operations, and practical security experimentation.
 
-A collection of **10 independent PHP projects** by [new92](https://github.com/new92), built to explore server-side development, HTML/CSS interfaces, filesystem operations, public APIs, and web security concepts.
+The redesigned suite features a **central project launcher**, consistent responsive interfaces, locally hosted CSS and JavaScript, accessible forms, searchable results, and optional light/dark mode. Each application remains independent and can also be launched on its own.
 
-## Contents
+> [!IMPORTANT]
+> These are **educational tools intended for local, authorized use**, not production-ready security services. Do not expose the PHP development server to the internet or inspect systems without permission.
 
+## Table of contents
+
+- [Quick start](#quick-start)
 - [Projects](#projects)
+- [Architecture](#architecture)
 - [Requirements](#requirements)
-- [Run a project locally](#run-a-project-locally)
-- [Security and reliability limitations](#security-and-reliability-limitations)
-- [Suggested improvements](#suggested-improvements)
+- [Configuration](#configuration)
+- [User interface](#user-interface)
+- [Security and limitations](#security-and-limitations)
+- [Testing and development](#testing-and-development)
 - [Contributing](#contributing)
 - [License](#license)
 
-## Projects
+## Quick start
 
-| Project | What it does | Start page / entry point |
-| --- | --- | --- |
-| [Cleaner](Cleaner/) | Attempts to delete files and folders from the system temporary directory. **Destructive: not recommended to run as-is.** | `Cleaner/cleaner.php` (read the warning below) |
-| [DirReader](DirReader/) | Lists entries in a directory supplied through a web form. | `form.html` |
-| [File uploader](File%20uploader/) | Demonstrates uploading image files to a local `uploads/` directory. | `index.html` |
-| [Gitspy](Gitspy/) | Displays publicly available GitHub account, follower, and repository information. | `index.html` |
-| [Investigator](Investigator/) | Looks up IP-address geolocation and related network information using an external API. | `index.html` |
-| [Maskify](Maskify/) | Demonstrates URL shortening and masked-link formatting. **Legacy; do not use for deceptive links.** | `index.html` |
-| [Protector](Protector/) | Retrieves URL, server, and HTTP-header information and performs an experimental IP comparison. **Not a reliable phishing or safety detector.** | `input.html` |
-| [Spider](Spider/) | Fetches a webpage and categorizes extracted links, including social, internal, and external URLs. | `input.html` |
-| [Trooper](Trooper/) | Attempts to retrieve Instagram profile information from an unofficial web endpoint. | `form.html` |
-| [WeatherApp](WeatherApp/) | Displays weather information requested through the Visual Crossing service on RapidAPI. | `index.php` |
-
-Each project has its own directory and README. Some upstream services or endpoints may have changed since these examples were written.
-
-## Requirements
-
-- PHP **8.0 or newer** for language features used in the repository; a currently supported PHP release is recommended. The projects are **not covered by a documented version-test matrix**.
-- A browser for the web-based examples.
-- Network access for projects that call external APIs or websites.
-- Depending on the project, the PHP **cURL**, **DOM/XML**, and **OpenSSL** extensions, plus `allow_url_fopen` for scripts using HTTP(S) stream wrappers.
-- Git to clone the repository. Spider includes a committed `vendor/` directory with Symfony-related dependencies; review those dependencies before use.
-
-Check your local PHP installation:
-
-```bash
-php -v
-php -m
-```
-
-No database or application framework is required for the repository as a whole.
-
-## Run a project locally
-
-Clone the repository:
+Clone the repository, enter its root directory, and start the PHP development server:
 
 ```bash
 git clone https://github.com/new92/php.git
 cd php
+php -S 127.0.0.1:8080
 ```
 
-For example, to open **Gitspy**:
+Open **http://127.0.0.1:8080/** to access the workbench and choose an application. Press **Ctrl+C** in the terminal to stop the server.
+
+You can also run each web application independently:
 
 ```bash
 cd Gitspy
 php -S 127.0.0.1:8080
 ```
 
-Visit <http://127.0.0.1:8080/index.html> in your browser. Press **Ctrl+C** to stop the server.
+Then open **http://127.0.0.1:8080/index.html**.
 
-For another project, start PHP from **that project's directory** and open its entry point from the table above. For example, DirReader uses `/form.html`, while WeatherApp uses `/index.php`. Many projects also contain a `localhost.php` helper, but starting PHP directly makes the local bind address explicit.
+> [!NOTE]
+> No database, Node.js runtime, frontend framework, or asset build step is needed to launch the web interfaces. Some features require PHP extensions, environment variables, or external API access, as described below.
+
+## Projects
+
+| Project | Purpose | Entry point |
+| --- | --- | --- |
+| [Gitspy](Gitspy/) | Explore public GitHub profiles, repositories, and limited follower/following previews via the GitHub API. | [Launch](Gitspy/index.html) |
+| [Investigator](Investigator/) | Retrieve approximate geolocation and network metadata for a valid IPv4 or IPv6 address through ipwho.is. | [Launch](Investigator/index.html) |
+| [Protector](Protector/) | Inspect HTTP status and response headers from an explicitly approved public HTTPS host. **Not a phishing detector or safety verdict.** | [Launch](Protector/input.html) |
+| [Spider](Spider/) | Extract and classify up to 200 unique links from a single approved webpage, without recursive crawling. | [Launch](Spider/input.html) |
+| [DirReader](DirReader/) | List files, directories, and symbolic links within a configured local root, without recursion. | [Launch](DirReader/form.html) |
+| [File Uploader](File%20uploader/) | Validate and privately store JPEG, PNG, or GIF images up to 500 KB. | [Launch](File%20uploader/index.html) |
+| [WeatherApp](WeatherApp/) | Show up to five days of weather forecast information using the Visual Crossing Timeline API. | [Launch](WeatherApp/index.php) |
+| [Cleaner](Cleaner/) | Inspect and optionally clean a chosen subdirectory of the system temporary directory; **dry-run by default**. | **CLI only:** `php Cleaner/cleaner.php --help` |
+
+Each application includes its own README with more detailed setup instructions. **Cleaner has no web entry point** so visiting a page cannot initiate deletion.
+
+**Legacy scope:** Maskify and Trooper are not included in this redesigned distribution.
+
+## Architecture
+
+The suite shares a lightweight UI design system while keeping the PHP applications and their backend responsibilities separate.
+
+```text
+php/
+├── index.html                # Central project launcher
+├── ui.css                    # Source stylesheet
+├── ui.js                     # Source frontend script
+├── Gitspy/
+├── Investigator/
+├── Protector/
+├── Spider/
+├── DirReader/
+├── File uploader/
+├── WeatherApp/
+├── Cleaner/                  # Command-line utility (no web GUI)
+├── shared/
+│   └── safe_http.php        # Constrained HTTPS requests for Protector/Spider
+├── tools/
+│   └── sync_ui.py           # Synchronizes local frontend assets
+├── tests/                    # PHP, HTTP, shell, and GUI smoke tests
+├── .github/workflows/         # Automated PHP checks
+└── SECURITY.md
+```
+
+For independence, each browser application includes local copies of `static/ui.css` and `static/ui.js`. The root `ui.css` and `ui.js` are the source files; see [Testing and development](#testing-and-development) for synchronization commands.
+
+## Requirements
+
+- **PHP 8.1 or newer**. The included CI workflow targets PHP **8.1, 8.3, and 8.4**.
+- **Git** to clone the repository and a modern web browser.
+- PHP **cURL** for Gitspy, Investigator, Protector, Spider, and WeatherApp.
+- PHP **DOM/XML** for Spider; **fileinfo** for File Uploader.
+- Working HTTPS/TLS support for external API requests.
+- Internet access for tools that query third-party services; local interfaces themselves use no external frontend dependencies.
+- **Python 3** only if you want to run the optional UI-asset synchronization tool.
+
+Verify your installation:
+
+```bash
+php -v
+php -m
+```
+
+The redesigned Spider does not require Composer or its legacy Symfony dependencies to execute.
+
+## Configuration
+
+Set the relevant variables in the terminal **before starting** the PHP server:
+
+| Environment variable | Project | Description |
+| --- | --- | --- |
+| `PHP_DEMO_ALLOWED_HOSTS` | Protector, Spider | Comma-separated list of exact public HTTPS hostnames you are authorized to inspect; **empty by default**. |
+| `DIRREADER_ROOT` | DirReader | Absolute path to the permitted directory root; defaults to the DirReader project directory. |
+| `PHP_DEMO_UPLOAD_DIR` | File Uploader | Private upload directory outside the web root; defaults to a dedicated folder under the operating system's temporary directory. |
+| `VISUAL_CROSSING_API_KEY` | WeatherApp | Required Visual Crossing API key; read server-side. |
+| `GITHUB_TOKEN` | Gitspy | Optional GitHub API token to increase applicable request limits. |
+
+**Linux, macOS, or Windows Git Bash:**
+
+```bash
+# Replace with a hostname you own or are authorized to inspect.
+export PHP_DEMO_ALLOWED_HOSTS=example.com
+export VISUAL_CROSSING_API_KEY=your_api_key_here
+
+php -S 127.0.0.1:8080
+```
+
+**Windows PowerShell:**
+
+```powershell
+$env:PHP_DEMO_ALLOWED_HOSTS = 'example.com'
+$env:VISUAL_CROSSING_API_KEY = 'your_api_key_here'
+
+php -S 127.0.0.1:8080
+```
+
+You only need to configure variables for the applications you intend to use. **Never commit tokens, credentials, local uploads, or other sensitive files.** Provider availability, limits, and terms still apply.
+
+### Cleaner: safe command-line usage
+
+Cleaner is intentionally separate from the web workbench. For example, on Linux/macOS or Git Bash, create a disposable subdirectory under your system temporary folder and preview its contents before deleting anything:
+
+```bash
+mkdir -p "$(php -r 'echo sys_get_temp_dir();')/my-app-cache"
+php Cleaner/cleaner.php --dir="$(php -r 'echo sys_get_temp_dir();')/my-app-cache"
+```
+
+Only after carefully checking the dry-run output, use `--apply` to remove the selected directory's **contents**:
+
+```bash
+php Cleaner/cleaner.php --dir="$(php -r 'echo sys_get_temp_dir();')/my-app-cache" --apply
+```
+
+See [Cleaner/README.md](Cleaner/README.md) for Windows examples and safeguards. Deletion is irreversible.
+
+## User interface
+
+The redesigned GUI provides:
+
+- A central, responsive dashboard linking to all seven browser applications.
+- Consistent navigation, descriptive forms, status messages, and readable result cards.
+- Client-side filtering of **already loaded** tables and lists, without performing additional server requests.
+- Light/dark mode with browser-local preference storage.
+- Visible keyboard focus, semantic labels, skip navigation, and reduced-motion support.
+- Drag-and-drop image selection and local previews in File Uploader; **server-side validation remains authoritative**.
+- Locally served fonts, styles, and scripts—**no CDN or frontend analytics dependencies**.
+
+The PHP forms and results remain usable with JavaScript disabled. For implementation and accessibility details, see the [GUI guide](docs/GUI_GUIDE.md) and [GUI changelog](GUI_CHANGELOG.md).
+
+## Security and limitations
+
+The revised code includes several defensive improvements, but **these do not make the applications suitable for public or multi-user hosting**.
+
+- **Outbound requests:** Protector and Spider use [`shared/safe_http.php`](shared/safe_http.php), which requires an explicit hostname allowlist, HTTPS on port 443, public IPv4 resolution, bounded responses, and no redirects. The guard is **not** a substitute for network-level egress filtering and authentication.
+- **File operations:** DirReader confines results to a configured directory root; File Uploader checks file content and writes randomly named files to private storage by default; Cleaner refuses web execution and requires an explicit target and `--apply` to delete files.
+- **Data handling:** Dynamic output is escaped in the revised result pages. Provider data can still be incomplete, outdated, or rate-limited.
+- **Scope:** Protector inspects response metadata and cannot determine whether a site is safe. Spider analyzes one page only. IP geolocation is approximate, not person identification.
+- **Third-party services:** Gitspy uses GitHub's API, Investigator queries ipwho.is, and WeatherApp calls Visual Crossing. Review privacy policies, rate limits, and licensing terms before use.
 
 > [!WARNING]
-> **Local development only.** PHP's built-in server is not a production server. Bind it to `127.0.0.1`; do not expose these demos on the public internet or a shared network. A localhost bind does **not** correct vulnerabilities in the application itself. Prefer an isolated development environment and avoid sensitive data.
+> Run this workbench on `127.0.0.1` in a trusted environment. Do not expose it publicly without an independent security review and appropriate authorization, isolation, monitoring, and abuse controls. Only inspect networks or websites you own or have explicit permission to test.
 
-### Project-specific setup
+Read the [security policy](SECURITY.md) and [review notes](docs/REVIEW_NOTES.md) for implementation boundaries and known limitations.
 
-- **File uploader:** `upload.php` expects an `uploads/` folder under the project directory. The current implementation checks filename extensions and a size limit, but does **not** perform robust file-content validation or use private, randomly named storage. Do not expose it publicly.
-- **WeatherApp:** `WeatherApp/index.php` currently uses the Visual Crossing **RapidAPI** endpoint and contains an `X-RapidAPI-Key: <API_KEY>` placeholder. The `VISUAL_CROSSING_API_KEY` environment variable is **not implemented** in the current script. Refactor the code to read a key from the environment before using a real credential; never commit API keys.
-- **Gitspy:** Uses unauthenticated GitHub API requests, which may be rate-limited. The current code does **not** use a `GITHUB_TOKEN` environment variable.
-- **Investigator:** Uses `ip-api.com` over **HTTP**, not `ipwho.is` or a guaranteed HTTPS connection. IP geolocation is approximate and does not identify a person.
-- **Spider:** Uses the bundled Symfony BrowserKit/HttpClient/DomCrawler dependencies. It does **not** currently implement a target-host allowlist or the proposed `PHP_DEMO_ALLOWED_HOSTS` setting. Request only pages you are permitted to inspect.
-- **Cleaner:** **Do not run this script without reviewing and rewriting its deletion behavior.** It attempts to remove contents of the system temporary directory immediately, without confirmation or a dry run; `--help` is not implemented. It also uses Windows-style path separators, which can cause portability problems.
+## Testing and development
 
-## Security and reliability limitations
+Run the following from the **repository root** in Linux, macOS, or Git Bash:
 
-The repository is experimental. **Do not assume the following protections exist** in the current code:
+```bash
+# Syntax-check first-party PHP files
+find . -type f -name '*.php' -not -path '*/vendor/*' -print0 | xargs -0 -n1 php -l
 
-- **Input validation and output encoding:** Several scripts handle form fields or API responses directly, without consistent validation or HTML escaping.
-- **Filesystem restrictions:** DirReader accepts a user-provided path without an enforced directory allowlist. The uploader saves files using their supplied names in a web-accessible directory. Cleaner can delete files without a preview.
-- **Safe outbound requests:** Protector and Spider do not provide a shared, allowlist-driven HTTP client or comprehensive server-side request forgery (SSRF) defenses. Some legacy scripts disable TLS certificate verification.
-- **Trustworthy safety verdicts:** Protector's IP-address comparison cannot establish whether a website is legitimate or free from phishing and malware. Its displayed result is **not** a security assessment.
-- **Guaranteed external API support:** Third-party endpoints can change, reject requests, enforce rate limits, or require authentication. Trooper relies on an unofficial Instagram endpoint; Maskify relies on a URL-shortening service.
-- **Automated test coverage:** The current repository does not include the proposed `tests/` suite, GitHub Actions workflow, `shared/` HTTP client, `SECURITY.md`, or `docs/REVIEW_NOTES.md`.
+# Backend validation and safety tests
+php tests/dirreader_test.php
+bash tests/cleaner_smoke.sh
+bash tests/uploader_smoke.sh
+php tests/network_guard_test.php
+php tests/validation_test.php
+php tests/spider_parser_test.php
+bash tests/web_guard_smoke.sh
 
-Use these tools only for lawful, authorized experimentation. Do not submit third-party sites to network-inspection scripts without permission, share misleading masked links, or rely on any result for consequential security decisions.
+# Frontend integration smoke test
+bash tests/gui_smoke.sh
 
-## Suggested improvements
+# Confirm that each project's UI assets match the root source
+python3 tools/sync_ui.py --check
+```
 
-The following are **recommendations, not implemented features**:
+When changing the shared styles or script, synchronize all project copies with:
 
-1. Make Cleaner CLI-only, constrain its target directory, and require an explicit dry-run review before deletion.
-2. Add strict path validation and output escaping; keep uploaded files outside the web root and validate actual file content.
-3. Add outbound HTTPS allowlists, SSRF protections, TLS verification, redirect restrictions, and network timeouts.
-4. Move API credentials into environment variables and handle missing or rate-limited responses gracefully.
-5. Review and update Spider's dependencies, then add reproducible tests and continuous integration.
-6. Clearly distinguish informational URL metadata from verified security findings.
+```bash
+python3 tools/sync_ui.py
+```
+
+The included [GitHub Actions workflow](.github/workflows/php-checks.yml) defines automated checks for PHP 8.1, 8.3, and 8.4. Its GUI smoke test verifies pages and assets over a local server; it is **not a substitute for manual cross-browser, accessibility, security, or live API testing**.
 
 ## Contributing
 
-Bug reports, security fixes, documentation updates, accessibility improvements, and tests are welcome. Please avoid committing credentials, uploaded files, temporary output, or other sensitive information. Open an [issue](https://github.com/new92/php/issues) for general feedback; avoid posting vulnerability details or secrets publicly.
+Bug fixes, accessible UI enhancements, safer data handling, tests, and documentation improvements are welcome. Open a [GitHub issue](https://github.com/new92/php/issues) for general feedback. For vulnerabilities, follow [SECURITY.md](SECURITY.md) rather than publicly disclosing sensitive details.
 
 ## License
 
-Distributed under the [MIT License](LICENSE). Third-party packages and external services have their own licenses and terms of use.
+The project is distributed under the [MIT License](https://github.com/new92/php/blob/main/LICENSE). Third-party APIs and dependencies are subject to their respective licenses and terms.

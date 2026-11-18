@@ -33,24 +33,19 @@ if (!is_string($url)) {
 if ($error !== null) { http_response_code(422); }
 $counts = array_count_values(array_column($links, 'type'));
 ?>
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Results · Spider</title><link rel="stylesheet" href="static/ui.css"></head>
-<body><main class="container">
-<header class="nav"><a class="brand" href="input.html">◉ Spider</a><a href="input.html">New inspection ↗</a></header>
-<div class="eyebrow">Single-page link analysis · local only</div><h1>Links, organized.<br><span class="muted">Clearly and safely.</span></h1>
-<p class="lead">Read up to 200 unique links from one approved HTML page. Spider does not recursively crawl, follow redirects, or access arbitrary hosts.</p>
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07111c"><meta name="description" content="Categorized links from one authorized page."><title>Link analysis results · PHP Utilities</title><link rel="stylesheet" href="static/ui.css"><script src="static/ui.js" defer></script></head><body data-project="spider"><a class="skip-link" href="#main">Skip to main content</a><main id="main" class="shell"><header class="topbar"><a class="brand" href="input.html"><span class="brand-mark" aria-hidden="true">◈</span>Spider</a><nav class="top-actions" aria-label="Page actions"><a class="toplink" href="input.html">Analyze another page</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button></nav></header>
+<section class="result-head"><div class="eyebrow">LINK INTELLIGENCE / ANALYSIS</div><h1>A page of links. <span class="highlight">Organized.</span></h1><p>Results come from one permitted HTML page. Spider does not recurse into linked destinations or follow redirects.</p></section>
 <?php if ($error !== null): ?>
-<section class="notice error" role="alert"><h2>Unable to inspect page</h2><p><?= demo_escape($error) ?></p><p>Set <code>PHP_DEMO_ALLOWED_HOSTS</code> to the exact public hostname before running this demo.</p></section>
+<section class="notice error" role="alert"><h2>Unable to analyze this page</h2><p><?= demo_escape($error) ?></p><p>Use a public HTTPS URL whose hostname you have approved in <code>PHP_DEMO_ALLOWED_HOSTS</code>.</p></section>
 <?php else: ?>
-<section class="summary"><div><span class="label">Scanned URL</span><p class="mono break"><?= demo_escape($url) ?></p></div><div><span class="label">Unique links</span><p class="metric"><?= count($links) ?></p></div><div><span class="label">Internal / external</span><p class="metric"><?= (int) ($counts['Internal'] ?? 0) ?> / <?= (int) ($counts['External'] ?? 0) ?></p></div></section>
-<section class="notice"><h2>Classification notes</h2><p>Social links and email addresses are counted separately. Internal means the same hostname or its subdomains; links are extracted from a single page, not followed. Only HTTPS links and valid email addresses are displayed.</p></section>
-<section><h2>Extracted links</h2><div class="table-scroll"><table><thead><tr><th scope="col">Category</th><th scope="col">Destination</th></tr></thead><tbody>
-<?php foreach ($links as $link): ?>
-<tr><td><span class="pill"><?= demo_escape($link['type']) ?></span></td><td class="break">
-<?php if ($link['type'] === 'Email'): ?><?= demo_escape(substr($link['url'], 7)) ?>
-<?php else: ?><a target="_blank" rel="noopener noreferrer nofollow" href="<?= demo_escape($link['url']) ?>"><?= demo_escape($link['url']) ?></a><?php endif; ?>
-</td></tr>
-<?php endforeach; ?>
-</tbody></table></div></section>
+<div class="summary"><div class="stat-card"><span class="stat-label">Total links</span><p class="metric accent"><?= count($links) ?></p></div><div class="stat-card"><span class="stat-label">Internal links</span><p class="metric"><?= (int) ($counts['Internal'] ?? 0) ?></p></div><div class="stat-card"><span class="stat-label">External links</span><p class="metric"><?= (int) ($counts['External'] ?? 0) ?></p></div></div>
+<section class="data-panel"><h2 class="section-title">Scanned page</h2><p class="mono break"><?= demo_escape((string) $url) ?></p><div class="chips"><span class="chip">Social <?= (int) ($counts['Social'] ?? 0) ?></span><span class="chip">Email <?= (int) ($counts['Email'] ?? 0) ?></span><span class="chip">Maximum 200 unique URLs</span></div></section>
+<section class="data-panel"><div class="section-head"><h2 class="section-title">Extracted links</h2><span class="pill neutral">Not followed</span></div><div class="toolbar"><input class="search-input" id="link-search" type="search" placeholder="Filter links or categories…" aria-label="Filter extracted links" data-filter="links-list"><span class="count" id="links-list-count"></span></div>
+<div class="table-scroll"><table><thead><tr><th scope="col">Type</th><th scope="col">Destination</th></tr></thead><tbody id="links-list">
+<?php foreach ($links as $link): ?><tr data-search-item><td><span class="pill"><?= demo_escape($link['type']) ?></span></td><td class="break"><?php if ($link['type'] === 'Email'): ?><span class="mono"><?= demo_escape(substr($link['url'], 7)) ?></span><?php else: ?><a href="<?= demo_escape($link['url']) ?>" target="_blank" rel="noopener noreferrer nofollow"><?= demo_escape($link['url']) ?> ↗</a><?php endif; ?></td></tr><?php endforeach; ?>
+</tbody></table></div><p class="filter-empty" id="links-list-empty" hidden>No links match your filter.</p>
+<?php if ($links === []): ?><p class="empty-state">No supported links were found on this page.</p><?php endif; ?>
+</section>
 <?php endif; ?>
-<footer>Educational demonstration · one HTTPS request · no recursive crawling</footer>
-</main></body></html>
+<section class="notice warning"><h2>Classification is descriptive, not a trust assessment</h2><p>Internal indicates same host or subdomain; social and email links are classified separately. Spider does not confirm the safety of linked destinations.</p></section>
+<footer class="footer"><span>Spider · Educational utility · Local use</span><span>Built with PHP · No external frontend dependencies</span></footer></main></body></html>

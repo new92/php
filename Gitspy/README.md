@@ -32,3 +32,8 @@ PowerShell: `$env:GITHUB_TOKEN='your_personal_token'`. The token is sent only to
 - Displays total follower/repository counts from the account profile, clearly distinguishing the 30-item page previews.
 
 Public GitHub API fields and quotas may change. This is a small educational demo, not an exhaustive analytics tool.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

@@ -4,14 +4,22 @@ declare(strict_types=1);
 
 header('Content-Type: text/html; charset=utf-8');
 header('X-Content-Type-Options: nosniff');
+header('Referrer-Policy: no-referrer');
+header("Content-Security-Policy: default-src 'self'; style-src 'self'; script-src 'self'; object-src 'none'; base-uri 'none'; frame-ancestors 'none'");
 
 function respond(int $status, string $message): never
 {
     http_response_code($status);
     $safe = htmlspecialchars($message, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
-    echo '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">';
-    echo '<title>Upload result</title><body style="font:16px/1.6 system-ui,sans-serif;max-width:38rem;margin:4rem auto;padding:0 1rem">';
-    echo '<h1>File uploader</h1><p>' . $safe . '</p><a href="index.html">Upload another image</a></body></html>';
+    $success = $status >= 200 && $status < 300;
+    ?>
+<!doctype html><html lang="en" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#07111c"><meta name="description" content="Outcome of private local image upload."><title>Upload result · PHP Utilities</title><link rel="stylesheet" href="static/ui.css"><script src="static/ui.js" defer></script></head><body data-project="uploader"><a class="skip-link" href="#main">Skip to main content</a><main id="main" class="shell"><header class="topbar"><a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">⇧</span>File Uploader</a><nav class="top-actions" aria-label="Page actions"><a class="toplink" href="index.html">Upload another</a><button type="button" class="theme-toggle" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button></nav></header>
+<section class="result-head"><div class="eyebrow">PRIVATE STORAGE / OUTCOME</div><h1><?= $success ? 'Upload <span class="highlight">complete.</span>' : 'Upload <span class="highlight">not completed.</span>' ?></h1><p>Your image is validated and stored only when server-side checks succeed.</p></section>
+<section class="card result-card-narrow"><div class="form-header"><h2><?= $success ? 'Image accepted' : 'Action needed' ?></h2><span class="pill <?= $success ? '' : 'neutral' ?>"><?= $success ? 'Saved privately' : 'Not saved' ?></span></div>
+<div class="notice <?= $success ? 'success' : 'error' ?>" role="status"><h2><?= $success ? 'Storage successful' : 'Upload rejected' ?></h2><p><?= $safe ?></p></div><a class="button" href="index.html">Select another image ↗</a>
+</section><section class="notice warning"><h2>Storage is private</h2><p>Uploaded images are not displayed or made publicly downloadable by this demo. No server storage path or random file name is shared in the response.</p></section>
+<footer class="footer"><span>File Uploader · Educational utility · Local use</span><span>Built with PHP · No external frontend dependencies</span></footer></main></body></html>
+<?php
     exit;
 }
 

@@ -28,3 +28,8 @@ Open <http://127.0.0.1:8080/index.php>, enter a city such as `Thessaloniki, Gree
 - Handles missing keys, API failures and invalid data without PHP error dumps.
 
 Data availability, quotas and commercial permissions depend on the account and service terms. Never rely on a forecast as your only safety information.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

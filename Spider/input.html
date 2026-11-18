@@ -1,6 +1,43 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Spider · Link analyzer</title><meta name="description" content="A constrained single-page HTTPS link analyzer."><link rel="stylesheet" href="static/ui.css"></head><body><main class="container">
-<header class="nav"><span class="brand">◉ Spider</span><span class="label">Local research lab</span></header><div class="eyebrow">Web link analysis</div><h1>Discover the structure.<br><span class="muted">Not the noise.</span></h1>
-<p class="lead">Extract and organize links from a single HTML page. A simple, constrained tool for understanding site navigation and outbound references.</p>
-<form action="dashboard.php" method="post" class="form-card"><label for="url">HTTPS page</label><input id="url" type="url" name="url" placeholder="https://example.com/" pattern="https://.*" maxlength="2048" required><p class="hint">Only public HTTPS hosts explicitly approved via PHP_DEMO_ALLOWED_HOSTS are permitted. Spider does not follow links or redirects.</p><button type="submit">Analyze links ↗</button></form>
-<section class="notice"><h2>Single-page analysis</h2><p>Results are capped at 200 unique links and the fetched HTML at 512 KiB. This is a local educational tool, not an unrestricted web crawler.</p></section><footer>Respect website permissions and terms of use · local only</footer>
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Classify links found on one approved web page, with a clear breakdown of internal, external, social and email references.">
+  <meta name="theme-color" content="#07111c">
+  <title>Spider · PHP Utilities</title>
+  <link rel="stylesheet" href="static/ui.css">
+  <script src="static/ui.js" defer></script>
+</head>
+<body data-project="Spider">
+<a href="#main" class="skip-link">Skip to main content</a><main id="main" class="shell"><header class="topbar">
+    <a class="brand" href="input.html" aria-label="Spider home"><span class="brand-mark" aria-hidden="true">◈</span> Spider</a>
+    <nav class="top-actions" aria-label="Page actions">
+      <a class="toplink" href="input.html">Start page</a>
+      <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to light theme"><span aria-hidden="true">◐</span> <span class="theme-label">Light mode</span></button>
+    </nav>
+  </header>
+<section class="hero" aria-labelledby="page-title"><div>
+<div class="eyebrow">04 / Link intelligence</div>
+<h1 id="page-title">Map the links.<br><span class="highlight">Keep the scope.</span></h1>
+<p>Classify links found on one approved web page, with a clear breakdown of internal, external, social and email references.</p>
+<div class="chips"><span class="chip">Link classification</span><span class="chip">No recursive crawl</span><span class="chip">Bounded results</span></div>
+</div><aside class="hero-visual" aria-label="SPIDER / WORKFLOW">
+    <div class="visual-top"><span class="visual-code">SPIDER / WORKFLOW</span><span class="visual-dot" aria-hidden="true"></span></div>
+    <div class="visual-glyph" aria-hidden="true">◈</div><div class="visual-lines"><div class="visual-row"><span>Scope</span><strong>Single HTML page</strong></div><div class="visual-row"><span>Link limit</span><strong>200 unique</strong></div><div class="visual-row"><span>Recursion</span><strong>Disabled</strong></div></div>
+  </aside></section>
+<section class="workspace" aria-label="Start working">
+<form action="dashboard.php" method="post" class="form-card" data-submit-state >
+<div class="form-header"><h2>Analyze one page</h2><span class="form-index">01 / INPUT</span></div>
+<label for="primary-input" class="field">Approved HTTPS page</label>
+<input class="input" id="primary-input" type="url" name="url" placeholder="https://example.com/" maxlength="2048" pattern="https://.*" required autocomplete="off" spellcheck="false">
+<p class="hint">Approve the exact host through PHP_DEMO_ALLOWED_HOSTS. One page only; maximum 200 unique links.</p>
+<button class="button full" type="submit">Analyze links <span aria-hidden="true">↗</span></button>
+</form>
+<aside class="card"><div class="form-header"><h2>How it works</h2><span class="form-index">02 / GUIDE</span></div>
+<div class="mini-steps"><div class="mini-step"><span class="step-index">01</span><div><strong>Set an allowlist</strong><p>Authorize the target public HTTPS hostname.</p></div></div><div class="mini-step"><span class="step-index">02</span><div><strong>Read a page</strong><p>Spider fetches one HTML page without following redirects.</p></div></div><div class="mini-step"><span class="step-index">03</span><div><strong>Filter discoveries</strong><p>Search links and review their categories in the results.</p></div></div></div>
+</aside>
+</section>
+<section class="notice warning" aria-label="Important limitation"><h2>No unbounded crawling</h2><p>This tool does not enumerate entire websites or follow discovered links. Inspect only websites for which you have permission.</p></section>
+<footer class="footer"><span>Spider · For local, authorized use</span><span>No external UI assets or trackers</span></footer>
 </main></body></html>

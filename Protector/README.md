@@ -27,3 +27,8 @@ Open <http://127.0.0.1:8080/input.html> and enter `https://example.com/`. Multip
 - Fetches **headers only**, without rendering remote HTML.
 
 **Limitations:** This is not a complete defense for a publicly accessible multi-user URL inspector. Enforce network-level egress filtering, authentication and quotas before public deployment. No reputation or malware scanning is performed.
+
+
+## Redesigned web interface
+
+The web interface uses the repository-wide responsive design system, with light/dark mode, keyboard-focus styling, accessible feedback and no external UI dependencies. Pages remain usable without JavaScript. See the [GUI guide](../docs/GUI_GUIDE.md).

@@ -24,8 +24,8 @@ On Windows PowerShell, use `$env:PHP_DEMO_UPLOAD_DIR='C:\private\uploads'` follo
 
 **Security:** Do not expose this demo directly to the public internet. It does not provide authentication, rate limiting, malware scanning, or upload quotas. In production, you must add these controls and configure PHP/web-server body-size limits, storage access controls, and lifecycle cleanup.
 
-## Screenshots
+## Redesigned web interface
 
-![Upload form](photos/index.png)
+The refreshed local UI includes an accessible file picker, optional drag-and-drop and a browser-only image preview. The server still performs the authoritative validation and writes uploads outside the web root. A dedicated result page reports success or failure without exposing private paths. JavaScript is optional; the standard file form works without it.
 
-![Upload result](photos/output.png)
+The upload form and result page share the locally bundled `static/ui.css` and `static/ui.js` assets. See the [GUI guide](../docs/GUI_GUIDE.md) for accessibility and design notes.

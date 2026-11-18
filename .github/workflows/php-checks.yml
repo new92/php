@@ -34,3 +34,7 @@ jobs:
         run: php tests/network_guard_test.php && php tests/validation_test.php && php tests/spider_parser_test.php
       - name: Test invalid-input behavior over HTTP
         run: bash tests/web_guard_smoke.sh
+      - name: Verify synchronized UI assets
+        run: python3 tools/sync_ui.py --check
+      - name: Test responsive GUI entry points and result pages
+        run: bash tests/gui_smoke.sh
