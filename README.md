@@ -3,9 +3,6 @@
 
 A collection of **10 independent PHP projects** by [new92](https://github.com/new92), built to explore server-side development, HTML/CSS interfaces, filesystem operations, public APIs, and web security concepts.
 
-> [!IMPORTANT]
-> These are **learning projects and proofs of concept**, not production-ready services. Some scripts are unfinished or use legacy techniques. Inspect the code before running anything, especially scripts that modify files or request external URLs.
-
 ## Contents
 
 - [Projects](#projects)
